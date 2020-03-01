@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\xelou\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-native-svg
+  C:\Program Files\nodejs\node.exe C:\Users\xelou\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @react-native-community/slider
 
 PATH: 
   C:\Program Files\Dell\DW WLAN Card;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\WIDCOMM\Bluetooth Software\;C:\Program Files\WIDCOMM\Bluetooth Software\syswow64;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\OpenVPN\bin;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\nodejs\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\HMA! Pro VPN\bin;C:\Users\xelou\AppData\Local\Microsoft\WindowsApps;C:\Users\xelou\AppData\Roaming\npm;C:\Users\xelou\AppData\Local\atom\bin;"C:\Python27;C:\Python27\Lib\site-packages\;C:\Python27\Scripts\;";C:\Program Files\heroku\bin;C:\Users\xelou\AppData\Local\Microsoft\WindowsApps;;C:\Users\xelou\AppData\Local\Programs\Microsoft VS Code\bin
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\xelou\Documents\WORK\WORK-Freelance\On pompe\onpompe\node_modules\@babel\compat-data\node_modules\.bin'
+  Error: EPERM: operation not permitted, unlink 'C:\Users\xelou\Documents\WORK\WORK-Freelance\On pompe\onpompe\node_modules\@babel\generator\node_modules\.bin'
 
 npm manifest: 
   {
