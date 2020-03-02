@@ -7,105 +7,107 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class SetupScreen extends React.Component {
 
-  state = {
-      players: [{
-        name: null,
-        placeholder: 'Nom du joueur',
-        bonus: 1,
-        drinks: 0
-      },{
-        name: null,
-        placeholder: 'Nom du joueur',
-        bonus: 1,
-        drinks: 0
-      },{
-        name: null,
-        placeholder: 'Nom du joueur',
-        bonus: 1,
-        drinks: 0
-      },{
-        name: null,
-        placeholder: 'Nom du joueur',
-        bonus: 1,
-        drinks: 0
-      }],
-    isAlcool: true,
-    alcools: [{
-        name: 'Alcool 1',
-        value: 0
-    },{
-        name: 'Alcool 2',
-        value: 0
-    },{
-        name: 'Alcool 3',
-        value: 0
-    }],
-    isBonus: true,
-    rounds: 100,
-    isPot: false
-  }
+  // state = {
+  //     players: [{
+  //       name: null,
+  //       placeholder: 'Nom du joueur',
+  //       bonus: 1,
+  //       drinks: 0
+  //     },{
+  //       name: null,
+  //       placeholder: 'Nom du joueur',
+  //       bonus: 1,
+  //       drinks: 0
+  //     },{
+  //       name: null,
+  //       placeholder: 'Nom du joueur',
+  //       bonus: 1,
+  //       drinks: 0
+  //     },{
+  //       name: null,
+  //       placeholder: 'Nom du joueur',
+  //       bonus: 1,
+  //       drinks: 0
+  //     }],
+  //   isAlcool: true,
+  //   alcools: [{
+  //       name: 'Alcool 1',
+  //       value: 0
+  //   },{
+  //       name: 'Alcool 2',
+  //       value: 0
+  //   },{
+  //       name: 'Alcool 3',
+  //       value: 0
+  //   }],
+  //   isBonus: true,
+  //   rounds: 100,
+  //   isPot: false
+  // }
 
-  handleAddPlayer = () => {
-    let playersTmp = [...this.state.players]
-    playersTmp.push({
-        name: null,
-        placeholder: 'Nom du joueur',
-        bonus: 1,
-        drinks: 0
-    })
-    this.setState({players: playersTmp})
-  }
+  // handleAddPlayer = () => {
+  //   let playersTmp = [...this.state.players]
+  //   playersTmp.push({
+  //       name: null,
+  //       placeholder: 'Nom du joueur',
+  //       bonus: 1,
+  //       drinks: 0
+  //   })
+  //   this.setState({players: playersTmp})
+  // }
 
-  handleChangePlayerName = (text, index) => {    
-    let playersTmp = [...this.state.players]
-    playersTmp[index].name = text
-    this.setState({players: playersTmp})
-  }
+  // handleChangePlayerName = (text, index) => {    
+  //   let playersTmp = [...this.state.players]
+  //   playersTmp[index].name = text
+  //   this.setState({players: playersTmp})
+  // }
 
-  handleRemovePlayer = (i) => {
-    let playersTmp = [...this.state.players]
-    playersTmp.splice(i, 1)
-    this.setState({players: playersTmp})
-  }
+  // handleRemovePlayer = (i) => {
+  //   let playersTmp = [...this.state.players]
+  //   playersTmp.splice(i, 1)
+  //   this.setState({players: playersTmp})
+  // }
 
-  handleAlcoolSelect = () => {
-    this.setState({isAlcool: !this.state.isAlcool})
-  }
+  // handleAlcoolSelect = () => {
+  //   this.setState({isAlcool: !this.state.isAlcool})
+  // }
 
-  handleAddAlcool = () => {
-    let alcoolsTmp = [...this.state.alcools]
-    alcoolsTmp.push({
-        name: 'Alcool ' + (alcoolsTmp.length + 1),
-        value: 0,
-    })
-    this.setState({alcools: alcoolsTmp})
-  }
+  // handleAddAlcool = () => {
+  //   let alcoolsTmp = [...this.state.alcools]
+  //   alcoolsTmp.push({
+  //       name: 'Alcool ' + (alcoolsTmp.length + 1),
+  //       value: 0,
+  //   })
+  //   this.setState({alcools: alcoolsTmp})
+  // }
 
-  handleChangeAlcoolName = (text, index) => {
-    let alcoolsTmp = [...this.state.alcools]
-    alcoolsTmp[index].name = text
-    this.setState({alcools: alcoolsTmp})
-  }
+  // handleChangeAlcoolName = (text, index) => {
+  //   let alcoolsTmp = [...this.state.alcools]
+  //   alcoolsTmp[index].name = text
+  //   this.setState({alcools: alcoolsTmp})
+  // }
 
-  handleRemoveAlcool = (i) => {
-    let alcoolsTmp = [...this.state.alcools]
-    alcoolsTmp.splice(i, 1)
-    this.setState({alcools: alcoolsTmp})
-  }
+  // handleRemoveAlcool = (i) => {
+  //   let alcoolsTmp = [...this.state.alcools]
+  //   alcoolsTmp.splice(i, 1)
+  //   this.setState({alcools: alcoolsTmp})
+  // }
 
-  handleBonusSelect = () => {
-    this.setState({isBonus: !this.state.isBonus})
-  }
+  // handleBonusSelect = () => {
+  //   this.setState({isBonus: !this.state.isBonus})
+  // }
 
-  handleBonusSlide = (value, index) => {
-    let playersTmp = [...this.state.players]
-    playersTmp[index].bonus = value
-    this.setState({players: playersTmp})
-  }
+  // handleBonusSlide = (value, index) => {
+  //   let playersTmp = [...this.state.players]
+  //   playersTmp[index].bonus = value
+  //   this.setState({players: playersTmp})
+  // }
 
-  handlePotSelect = () => {
-    this.setState({isPot: !this.state.isPot})
-  }
+  // handlePotSelect = () => {
+  //   this.setState({isPot: !this.state.isPot})
+  // }
+
+  // Todo : ne lancer le tirage que si au moins 2 joueurs sont sélectionnés
 
   render() {
     // console.log('SETUP states', this.state);
@@ -114,44 +116,44 @@ export default class SetupScreen extends React.Component {
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollview} centerContent='true'>
           <Text style={styles.pageTitle}>On pompe !</Text>
-          <Text style={styles.sectionTitle}>Joueursz</Text>
-          {this.state.players.map((item,i)  => (
-              <Input key={i} placeholder={item.placeholder} value={item.name} containerStyle={{width: '90%'}} onChangeText={text => this.handleChangePlayerName(text, i)} rightIcon={<Icon name="remove" size={15} color="grey" onPress={() => this.handleRemovePlayer(i)} />} />
+          <Text style={styles.sectionTitle}>Joueurs</Text>
+          {this.props.players.map((item,i)  => (
+              <Input key={i} placeholder={item.placeholder} value={item.name} containerStyle={{width: '90%'}} onChangeText={text => this.props.changePlayerName(text, i)} rightIcon={<Icon name="remove" size={15} color="grey" onPress={() => this.props.removePlayer(i)} />} />
           ))}
-          <Button icon={<Icon name="plus" size={15} color="grey" />} type='clear' title="Ajouter un joueur" onPress={this.handleAddPlayer} />
+          <Button icon={<Icon name="plus" size={15} color="grey" />} type='clear' title="Ajouter un joueur" onPress={this.props.addPlayer} />
 
           <View style={styles.section}>
               <Text style={styles.sectionTitle}>Choix des alcools</Text>
-              <Switch value={this.state.isAlcool} onChange={this.handleAlcoolSelect}/>
+              <Switch value={this.props.alcoolOption} onChange={this.props.alcoolSelect}/>
           </View>
-          <View style={{display: this.state.isAlcool ? 'flex' : 'none', flex: 1, width: '100%', alignItems: 'flex-start'}}>
-              {this.state.alcools.map((item,i)  => (
+          <View style={{display: this.props.alcoolOption ? 'flex' : 'none', flex: 1, width: '100%', alignItems: 'flex-start'}}>
+              {this.props.alcools.map((item,i)  => (
                 <>
-                  <Input placeholder={'Alcool ' + (i+1)} containerStyle={{width: '90%'}} onChangeText={text => this.handleChangeAlcoolName(text, i)} />
-                  <Icon key={i} name="remove" size={15} color="grey" onPress={() => this.handleRemoveAlcool(i)} />
+                  <Input placeholder={'Alcool ' + (i+1)} containerStyle={{width: '90%'}} onChangeText={text => this.props.changeAlcoolName(text, i)} />
+                  <Icon key={i} name="remove" size={15} color="grey" onPress={() => this.props.removeAlcool(i)} />
                 </>
               ))}
-              <Button icon={<Icon name="plus" size={15} color="grey" />} type='clear' title="Ajouter un alcool" onPress={this.handleAddAlcool} />
+              <Button icon={<Icon name="plus" size={15} color="grey" />} type='clear' title="Ajouter un alcool" onPress={this.props.addAlcool} />
           </View>
           <View style={styles.section}>
               <Text style={styles.sectionTitle}>Bonus/Malus aux joueurs</Text>
-              <Switch value={this.state.isBonus} onChange={this.handleBonusSelect}/>
+              <Switch value={this.props.bonusOption} onChange={this.props.bonusSelect}/>
           </View>
-          <View style={{display: this.state.isBonus ? 'flex' : 'none', flex: 1, width: '100%', alignItems: 'flex-start'}}>
-              {this.state.players.map((item,i)  => (
+          <View style={{display: this.props.bonusOption ? 'flex' : 'none', flex: 1, width: '100%', alignItems: 'flex-start'}}>
+              {this.props.players.map((item,i)  => (
                 <>
                   <Text style={styles.text}>{item.name || item.placeholder} : {item.bonus * 100}%</Text>
-                  <Slider key={i} style={{width: '100%'}} minimumValue={0.25} maximumValue={3} step={0.25} value={item.bonus} onValueChange={value => this.handleBonusSlide(value, i)} />
+                  <Slider key={i} style={{width: '100%'}} minimumValue={0.25} maximumValue={3} step={0.25} value={item.bonus} onValueChange={value => this.props.bonusSlide(value, i)} />
                 </>
               ))}
           </View>
           <View style={styles.section}>
               <Text style={styles.sectionTitle}>Durée de la partie</Text>
               <Picker
-                selectedValue={this.state.rounds}
+                selectedValue={this.props.rounds}
                 style={{height: 50, width: 150}}
                 onValueChange={(itemValue, itemIndex) =>
-                  this.setState({rounds: itemValue})
+                  this.props.roundPick(itemValue)
                 }>
                 <Picker.Item label="100 tours" value={100} />
                 <Picker.Item label="200 tours" value={200} />
@@ -160,7 +162,7 @@ export default class SetupScreen extends React.Component {
           </View>
           <View style={styles.section}>
               <Text style={styles.sectionTitle}>Jouer avec le pot</Text>
-              <Switch value={this.state.isPot} onChange={this.handlePotSelect}/>
+              <Switch value={this.props.potOption} onChange={this.props.potSelect}/>
           </View>
           <Button title="Commencer la partie !" onPress={() => this.props.navigation.navigate('Tirage')} />
         </ScrollView>

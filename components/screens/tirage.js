@@ -1,20 +1,43 @@
 import React from 'react';
 import {StyleSheet, Image, View, Text} from 'react-native';
+import { Button } from 'react-native-elements';
+import phrases from '../../assets/phrases.json';
 
 export default class TirageScreen extends React.Component {
   state = {
+    ...this.props,
     timer: 60
   }
-
-  // Todo : créer le fichier json avec les phrases
-  // Todo : importer le json en didMount
-  // Todo : tirer au hasard une phrase du json
+  // Todo : tous les x tirages, tirer une pause plutôt qu'une phrase
+  // débugger cette marde
 
   timerCountDown = () => {
     // Todo : compteur pour décrémenter le timer chaque seconde
   }
 
+  handleDrink = (playerIndex, gorgees) => {
+    console.log('drink !');
+    
+    playersTmp = this.state.players
+    playersTmp[playerIndex].drinks += gorgees
+    this.state.setPlayers(playersTmp)
+    this.setState({timer: 60})
+  }
+
   render() {
+    // console.log('TIRAGE props', this.props);
+
+    let rdmPlayerNumber = Math.floor(Math.random() * phrases.length);
+    let selectedPlayer = this.state.players[rdmPlayerNumber]
+    // let selectedPlayerIndex = this.props.players.indexOf(selectedPlayer)
+
+    let rdmPhraseNumber = Math.floor(Math.random() * phrases.length);
+    let selectedPhrase = phrases[rdmPhraseNumber]
+
+    const gorgees = [0.5,1,1.5,2,2.5,3]
+    let rdmGorgeesNumber = Math.floor(Math.random() * 6);
+    let selectedGorgees = gorgees[rdmGorgeesNumber]
+
    
     return (
       <View style={styles.container}>
@@ -27,8 +50,15 @@ export default class TirageScreen extends React.Component {
           <Text style={styles.menuTitle}>Terminer la partie</Text>
         </View>
         <View style={styles.centralTirage}>
-          <Text style={styles.tirageText}>[Prénom] tu n'as pas assez bu alors bois [Qté] gorgée(s) de [Alcool]</Text>
-          <Text style={styles.tirageTimer}>{this.state.timer}</Text>
+          <Text style={styles.tirageText}>{selectedPhrase.type === "classique" || selectedPhrase.type === "pot" || selectedPhrase.type === "jeu-solo" ?  selectedPlayer.name : null} {selectedPhrase.text1} {selectedGorgees} {selectedGorgees > 1 ? "gorgées" : 'gorgée'} de {this.props.alcools[0].name}</Text>
+          {selectedPhrase.type === "classique" || selectedPhrase.type === "pot" ? 
+            <Text style={styles.tirageTimer}>{this.state.timer}</Text>
+            :
+            <View>
+              {this.props.players.filter(item => item.name).map((item, i) => <Button title={item.name} type="outline" onPress={() => console.log('pouet')} />)}
+            </View>
+          }
+          <Button title="C'est bu !" onPress={() => this.handleDrink(rdmPlayerNumber, selectedGorgees)} />
         </View>
       </View>
     );

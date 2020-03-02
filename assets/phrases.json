@@ -1,0 +1,104 @@
+[
+    {
+      "id": 1,
+      "type": "classique",
+      "text1": "tu n'as pas assez bu alors bois",
+      "text2": ""
+    },{
+      "id": 2,
+      "type": "pot",
+      "text1": "tu fermes ta gueule et tu bois les",
+      "text2": "gorgées qu'il y a dans le pot"
+    },{
+      "id": 3,
+      "type": "pot",
+      "text1": "tu dois boire les",
+      "text2": "gorgées qu'il y a dans le pot"
+    },{
+      "id": 4,
+      "type": "classique",
+      "text1": "tu pues des pieds alors tu bois",
+      "text2": ""
+    },{
+      "id": 5,
+      "type": "classique",
+      "text1": "tu dois boire",
+      "text2": ""
+    },{
+      "id": 6,
+      "type": "classique",
+      "text1": "arrête de te mentir et accepte les problèmes en buvant",
+      "text2": ""
+    },{
+      "id": 7,
+      "type": "classique",
+      "text1": "tu te rends compte que tu es stupide et tu bois",
+      "text2": ""
+    },{
+      "id": 8,
+      "type": "jeu-solo",
+      "text1": "tu peux choisir une personne qui va boire",
+      "text2": ""
+    },{
+      "id": 9,
+      "type": "classique",
+      "text1": "tu ne sais pas ce que tu fais là alors tu bois",
+      "text2": ""
+    },{
+      "id": 10,
+      "type": "classique",
+      "text1": "tu n'as plus rien à perdre alors tu bois",
+      "text2": ""
+    },{
+      "id": 11,
+      "type": "classique",
+      "text1": "tu pues de la gueule et tu arranges cela en buvant",
+      "text2": ""
+     },{
+      "id": 12,
+      "type": "jeu-multi",
+      "text1": "Ceux qui ne portent pas de chaussures peuvent distributer",
+      "text2": ""
+    },{
+      "id": 13,
+      "type": "jeu-multi",
+      "text1": "Pour ou contre les toilettes mixtes ? Votez tous en même temps et la minorité boit",
+      "text2": ""
+    },{
+      "id": 14,
+      "type": "jeu-multi",
+      "text1": "Ceux qui ont déjà couché avec plus de 20 partenaires boivent",
+      "text2": ""
+    },{
+      "id": 15,
+      "type": "jeu-multi",
+      "text1": "Ceux qui ont déjà couché avec moins de 20 partenaires boivent",
+      "text2": ""
+    },{
+      "id": 16,
+      "type": "jeu-solo-bool",
+      "text1": "si tu tes déjà battu avec quelqu'un tu bois",
+      "text2": ""
+    },{
+      "id": 17,
+      "type": "jeu-multi",
+      "text1": "Le premier qui enlève un vêtement désigne qui doit boire",
+      "text2": ""
+    },{
+      "id": 18,
+      "type": "jeu-multi",
+      "text1": "Gagner 1 million ou vivre en bonne santé jusqu'à 100 ans ? Votez tous en même temps et la minorité boit",
+      "text2": ""
+    },{
+      "id": 19,
+      "type": "jeu-multi",
+      "text1": "Le premier qui cite le dernier film de Brad Pitt peut distribuer",
+      "text2": ""
+    },{
+      "id": 20,
+      "type": "jeu-multi",
+      "text1": "Votez pour celui avec les plus belles fesses, il boit",
+      "text2": ""
+    }
+  ]
+  
