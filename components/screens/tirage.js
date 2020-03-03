@@ -1,35 +1,26 @@
 import React from 'react';
-import {StyleSheet, Image, View, Text} from 'react-native';
+import {StyleSheet, TouchableOpacity, Image, View, Text} from 'react-native';
 import { Button } from 'react-native-elements';
 import phrases from '../../assets/phrases.json';
+import Countdown from '../countdown'
 
 export default class TirageScreen extends React.Component {
-  state = {
-    ...this.props,
-    timer: 60
-  }
+
   // Todo : tous les x tirages, tirer une pause plutôt qu'une phrase
-  // débugger cette marde
 
-  timerCountDown = () => {
-    // Todo : compteur pour décrémenter le timer chaque seconde
-  }
-
-  handleDrink = (playerIndex, gorgees) => {
-    console.log('drink !');
-    
-    playersTmp = this.state.players
+  handleDrink = (playerIndex, gorgees) => {   
+    let playersTmp = this.props.players
     playersTmp[playerIndex].drinks += gorgees
-    this.state.setPlayers(playersTmp)
+    this.props.setPlayers(playersTmp)
     this.setState({timer: 60})
   }
 
+
   render() {
     // console.log('TIRAGE props', this.props);
-
-    let rdmPlayerNumber = Math.floor(Math.random() * phrases.length);
-    let selectedPlayer = this.state.players[rdmPlayerNumber]
-    // let selectedPlayerIndex = this.props.players.indexOf(selectedPlayer)
+    let activePlayers = this.props.players.filter(item => item.name)
+    let rdmPlayerNumber = Math.floor(Math.random() * activePlayers.length);
+    let selectedPlayer = activePlayers[rdmPlayerNumber]
 
     let rdmPhraseNumber = Math.floor(Math.random() * phrases.length);
     let selectedPhrase = phrases[rdmPhraseNumber]
@@ -38,27 +29,28 @@ export default class TirageScreen extends React.Component {
     let rdmGorgeesNumber = Math.floor(Math.random() * 6);
     let selectedGorgees = gorgees[rdmGorgeesNumber]
 
-   
     return (
       <View style={styles.container}>
-        <View style={styles.leftMenu}>
+        <TouchableOpacity style={styles.leftMenu} clickable={true} onPress={() => this.props.navigation.navigate('Setup')}>
           <Image style={styles.menuIcons} source={require('../../assets/setup.jpg')} />
           <Text style={styles.menuTitle}>Joueurs/Alcools</Text>
-        </View>
-        <View style={styles.rightMenu}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.rightMenu} onPress={() => this.props.navigation.navigate('Finish')}>
           <Image style={styles.menuIcons} source={require('../../assets/finish.jpg')} />
           <Text style={styles.menuTitle}>Terminer la partie</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.centralTirage}>
           <Text style={styles.tirageText}>{selectedPhrase.type === "classique" || selectedPhrase.type === "pot" || selectedPhrase.type === "jeu-solo" ?  selectedPlayer.name : null} {selectedPhrase.text1} {selectedGorgees} {selectedGorgees > 1 ? "gorgées" : 'gorgée'} de {this.props.alcools[0].name}</Text>
-          {selectedPhrase.type === "classique" || selectedPhrase.type === "pot" ? 
-            <Text style={styles.tirageTimer}>{this.state.timer}</Text>
+          {selectedPhrase.type === "classique" || selectedPhrase.type === "pot" ?
+            <>
+              <Countdown selectedGorgees={selectedGorgees} />
+              <Button title="C'est bu !" titleStyle={{fontSize: 20,  paddingLeft: 10, paddingRight: 10}} onPress={() => this.handleDrink(rdmPlayerNumber, selectedGorgees)} />
+            </>
             :
-            <View>
-              {this.props.players.filter(item => item.name).map((item, i) => <Button title={item.name} type="outline" onPress={() => console.log('pouet')} />)}
+            <View style={styles.multiTirage}>
+              {this.props.players.filter(item => item.name).map((item, i) => <Button containerStyle={{marginRight: 10}} titleStyle={{fontSize: 16, color: 'white',  paddingLeft: 10, paddingRight: 10}} buttonStyle={{backgroundColor: 'green'}} key={i} title={item.name} type="outline" onPress={() => this.handleDrink(i, selectedGorgees)} />)}
             </View>
           }
-          <Button title="C'est bu !" onPress={() => this.handleDrink(rdmPlayerNumber, selectedGorgees)} />
         </View>
       </View>
     );
@@ -80,15 +72,15 @@ const styles = StyleSheet.create({
   },
   leftMenu: {
     position: 'absolute',
-    left: 0,
-    top: 10,
+    left: 10,
+    top: 40,
     flex: 1,
     alignItems: 'center',
   },
   rightMenu: {
     position: 'absolute',
-    right: 0,
-    top: 10,
+    right: 10,
+    top: 40,
     flex: 1,
     alignItems: 'center',
   },
@@ -108,8 +100,11 @@ const styles = StyleSheet.create({
   tirageText: {
     width: '80%',
     fontSize: 30,
+    textAlign: 'center'
   },
-  tirageTimer: {
-    fontSize: 60,
+  multiTirage: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20
   }
 });

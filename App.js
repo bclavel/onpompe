@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SetupScreen from './components/screens/setup';
 import TirageScreen from './components/screens/tirage';
+import FinishScreen from './components/screens/finish';
 
 const Stack = createStackNavigator();
 
@@ -42,7 +43,7 @@ export default function App() {
   }]
 
   const [players, setPlayers] = useState([...initPlayers]);
-  console.log('APP players', players);
+  // console.log('APP players', players);
   
   const [alcools, setAlcools] = useState([...initAlcools]);
   const [alcoolOption, setAlcoolOption] = useState(true);
@@ -146,6 +147,17 @@ export default function App() {
           {...props}
           players={players}
           setPlayers={setPlayers}
+          alcools={alcools}
+          alcoolOption={alcoolOption}
+          bonusOption={bonusOption}
+          potOption={potOption}
+          rounds={rounds} 
+        />}
+        </Stack.Screen>
+        <Stack.Screen name="Finish">
+          {props => <FinishScreen 
+          {...props}
+          players={players}
           alcools={alcools}
           alcoolOption={alcoolOption}
           bonusOption={bonusOption}
