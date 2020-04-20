@@ -6,8 +6,6 @@ import Countdown from '../countdown'
 
 export default class TirageScreen extends React.Component {
 
-  // Todo : tous les x tirages, tirer une pause plutôt qu'une phrase
-
   handleDrink = (playerIndex, gorgees) => {   
     let playersTmp = this.props.players
     playersTmp[playerIndex].drinks += gorgees
