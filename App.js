@@ -32,19 +32,20 @@ export default function App() {
   }]
 
   let initAlcools = [{
-    name: 'Alcool 1',
+    name: null,
+    placeholder: 'Alcool',
     value: 0
   },{
-    name: 'Alcool 2',
+    name: null,
+    placeholder: 'Alcool',
     value: 0
   },{
-    name: 'Alcool 3',
+    name: null,
+    placeholder: 'Alcool',
     value: 0
   }]
 
   const [players, setPlayers] = useState([...initPlayers]);
-  // console.log('APP players', players);
-  
   const [alcools, setAlcools] = useState([...initAlcools]);
   const [alcoolOption, setAlcoolOption] = useState(true);
   const [bonusOption, setBonusOption] = useState(true);
@@ -81,8 +82,9 @@ export default function App() {
   const handleAddAlcool = () => {
     let alcoolsTmp = [...alcools]
     alcoolsTmp.push({
-        name: 'Alcool ' + (alcoolsTmp.length + 1),
-        value: 0,
+      name: null,
+      placeholder: 'Alcool',
+      value: 0,
     })
     setAlcools(alcoolsTmp)
   }
