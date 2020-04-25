@@ -6,14 +6,14 @@
       "text2": ""
     },{
       "id": 2,
-      "type": "pot",
+      "type": "pot-drink",
       "text1": "tu fermes ta gueule et tu bois les",
       "text2": "gorgées qu'il y a dans le pot"
     },{
       "id": 3,
-      "type": "pot",
-      "text1": "tu dois boire les",
-      "text2": "gorgées qu'il y a dans le pot"
+      "type": "pot-add",
+      "text1": "tu verses l'équivalent de",
+      "text2": "gorgées dans le pot"
     },{
       "id": 4,
       "type": "classique",
@@ -98,6 +98,11 @@
       "id": 20,
       "type": "jeu-multi",
       "text1": "Votez pour celui avec les plus belles fesses, il boit",
+      "text2": ""
+    },{
+      "id": 21,
+      "type": "pause",
+      "text1": "Une petite pause bien méritée !",
       "text2": ""
     }
   ]

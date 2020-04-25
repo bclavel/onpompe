@@ -50,7 +50,9 @@ export default function App() {
   const [alcoolOption, setAlcoolOption] = useState(true);
   const [bonusOption, setBonusOption] = useState(true);
   const [potOption, setPotOption] = useState(false);
-  const [rounds, setRounds] = useState(100);  
+  const [rounds, setRounds] = useState(100);
+  const [currentRound, setCurrentRound] = useState(1);
+  const [pot, setPot] = useState(0)
 
   const handleAddPlayer = () => {
     let playersTmp = [...players]
@@ -118,6 +120,16 @@ export default function App() {
   const handleRoundPick = (value) => {
     setRounds(value)
   }
+  
+  const handleAddCurrentRound = () => {
+    setCurrentRound(currentRound + 1)
+  }
+
+  const handleResetDrinkCount = () => {
+    let playersTmp = [...players]
+    playersTmp.map(item => item.drinks = 0)
+    setPlayers(playersTmp)
+  }
 
   return (
     <NavigationContainer>
@@ -153,7 +165,11 @@ export default function App() {
           alcoolOption={alcoolOption}
           bonusOption={bonusOption}
           potOption={potOption}
-          rounds={rounds} 
+          rounds={rounds}
+          currentRound={currentRound}
+          addCurrentRound={handleAddCurrentRound}
+          pot={pot}
+          setPot={setPot}
         />}
         </Stack.Screen>
         <Stack.Screen name="Finish">
@@ -164,7 +180,9 @@ export default function App() {
           alcoolOption={alcoolOption}
           bonusOption={bonusOption}
           potOption={potOption}
-          rounds={rounds} 
+          rounds={rounds}
+          setCurrentRound={setCurrentRound}
+          resetDrintCount={handleResetDrinkCount}
         />}
         </Stack.Screen>
       </Stack.Navigator>

@@ -3,97 +3,94 @@ import { StyleSheet, ScrollView, View, Text, Switch, Slider, Picker } from 'reac
 import { Button, Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default SetupScreen = (props) => {
-    let activePlayers = props.players.filter(item => item.name)
+const SetupScreen = (props) => {
+  let activePlayers = props.players.filter(item => item.name)
+  let activeAlcools = props.alcools.filter(item => item.name)
 
-    const [errorMsg, setErrorMsg] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
-    const launchGame = () => {
-      if (activePlayers.length >= 2) {
-        props.navigation.navigate('Tirage')
-      } else {
-        setErrorMsg("Veuillez définir au moins 2 jouers")
-      }
+  const launchGame = () => {
+    if (activePlayers.length >= 2 && activeAlcools.length >= 1) {
+      props.navigation.navigate('Tirage')
+    } else if (activePlayers.length < 2 && activeAlcools.length >= 1) {
+      setErrorMsg("Veuillez définir au moins 2 jouers")
+    } else if (activePlayers.length >= 2 && activeAlcools.length < 1) {
+      setErrorMsg("Veuillez définir au moins 1 alcool")
+    } else {
+      setErrorMsg("Veuillez définir au moins 2 joueurs et 1 alcool")
     }
+  }
 
-    useEffect(() => {
-      if (activePlayers.length >= 2) setErrorMsg(null)
-    }, [activePlayers])
-   
-    return (
-      <ScrollView contentContainerStyle={styles.scrollview} centerContent='true'>
-        <Text style={styles.pageTitle}>On pompe !</Text>
-
-        <View style={styles.option}>
-          <Text style={styles.sectionTitle}>Joueurs</Text>
-          {props.players.map((item,i)  => (
+  useEffect(() => {
+    if (activePlayers.length >= 2 && activeAlcools.length >= 1) setErrorMsg(null)
+  }, [activePlayers, activeAlcools])
+  
+  return (
+    <ScrollView contentContainerStyle={styles.scrollview} centerContent='true'>
+      <Text style={styles.pageTitle}>On pompe !</Text>
+      <View style={styles.option}>
+        <Text style={styles.sectionTitle}>Joueurs</Text>
+        {props.players.map((item,i)  => (
+          <View key={i} style={styles.input}>
+            <Input placeholder={item.placeholder} value={item.name} containerStyle={{width: '93%'}} onChangeText={text => props.changePlayerName(text, i)} />
+            <Icon name="remove" size={15} style={{padding: 8}} color="grey" onPress={() => props.removePlayer(i)} />
+          </View>
+        ))}
+        <Button icon={<Icon name="plus" size={15} color="grey" />} titleStyle={styles.addLink} type='clear' title="Ajouter un joueur" onPress={props.addPlayer} />
+      </View>
+      <View style={styles.option}>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Choix des alcools</Text>
+          <Switch value={props.alcoolOption} onChange={() => props.alcoolSelect()}/>
+        </View>
+        <View style={{display: props.alcoolOption ? 'flex' : 'none', width: '100%', alignItems: 'flex-start'}}>
+          {props.alcools.map((item,i)  => (
             <View key={i} style={styles.input}>
-              <Input placeholder={item.placeholder} value={item.name} containerStyle={{width: '93%'}} onChangeText={text => props.changePlayerName(text, i)} />
-              <Icon name="remove" size={15} style={{padding: 8}} color="grey" onPress={() => props.removePlayer(i)} />
+              <Input placeholder={item.placeholder} value={item.name} containerStyle={{width: '93%'}} onChangeText={text => props.changeAlcoolName(text, i)} />
+              <Icon name="remove" size={15} style={{padding: 8}} color="grey" onPress={() => props.removeAlcool(i)} />
             </View>
           ))}
-          <Button icon={<Icon name="plus" size={15} color="grey" />} type='clear' title="Ajouter un joueur" onPress={props.addPlayer} />
+          <Button icon={<Icon name="plus" size={15} color="grey" />} titleStyle={styles.addLink} type='clear' title="Ajouter un alcool" onPress={props.addAlcool} />
         </View>
-        
-        <View style={styles.option}>
-          <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Choix des alcools</Text>
-              <Switch value={props.alcoolOption} onChange={props.alcoolSelect}/>
-          </View>
-          <View style={{display: props.alcoolOption ? 'flex' : 'none', width: '100%', alignItems: 'flex-start'}}>
-              {props.alcools.map((item,i)  => (
-                <View key={i} style={styles.input}>
-                  <Input placeholder={item.placeholder} value={item.name} containerStyle={{width: '93%'}} onChangeText={text => props.changeAlcoolName(text, i)} />
-                  <Icon name="remove" size={15} style={{padding: 8}} color="grey" onPress={() => props.removeAlcool(i)} />
-                </View>
-              ))}
-              <Button icon={<Icon name="plus" size={15} color="grey" />} type='clear' title="Ajouter un alcool" onPress={props.addAlcool} />
-          </View>
+      </View>
+      <View style={styles.option}>
+        <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Bonus/Malus aux joueurs</Text>
+            <Switch value={props.bonusOption} onChange={() => props.bonusSelect()}/>
         </View>
-
-        <View style={styles.option}>
-          <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Bonus/Malus aux joueurs</Text>
-              <Switch value={props.bonusOption} onChange={props.bonusSelect}/>
-          </View>
-          <View style={{display: props.bonusOption ? 'flex' : 'none', width: '100%', alignItems: 'flex-start', marginTop: 8}}>
-              {props.players.map((item,i) => (
-                <React.Fragment key={i}>
-                  <Text style={styles.bonusText}>{item.name || item.placeholder} : {item.bonus * 100}%</Text>
-                  {props.bonusOption ? <Slider style={{width: '100%'}} minimumValue={0.5} maximumValue={2} step={0.5} value={item.bonus} onValueChange={value => props.bonusSlide(value, i)} /> : null }
-                </React.Fragment>
-              ))}
-          </View>
+        <View style={{display: props.bonusOption ? 'flex' : 'none', width: '100%', alignItems: 'flex-start', marginTop: 8}}>
+          {props.players.map((item,i) => (
+            <React.Fragment key={i}>
+              <Text style={styles.bonusText}>{item.name || item.placeholder} : {item.bonus * 100}%</Text>
+              {props.bonusOption && <Slider style={{width: '100%'}} minimumValue={0.5} maximumValue={2} step={0.5} value={item.bonus} onValueChange={value => props.bonusSlide(value, i)} /> }
+            </React.Fragment>
+          ))}
         </View>
-
-        <View style={styles.roundOption}>
-          <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Durée de la partie</Text>
-              <Picker
-                selectedValue={props.rounds}
-                style={{height: 40, width: 150}}
-                onValueChange={(itemValue, itemIndex) =>
-                  props.roundPick(itemValue)
-                }>
-                <Picker.Item label="50 tirages" value={50} />
-                <Picker.Item label="100 tirages" value={100} />
-                <Picker.Item label="200 tirages" value={200} />
-                <Picker.Item label="300 tirages" value={300} />
-              </Picker>
-          </View>
+      </View>
+      <View style={styles.roundOption}>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Durée de la partie</Text>
+          <Picker selectedValue={props.rounds} style={styles.picker} onValueChange={itemValue => props.roundPick(itemValue)}>
+            <Picker.Item label="50 tirages" value={50} />
+            <Picker.Item label="100 tirages" value={100} />
+            <Picker.Item label="200 tirages" value={200} />
+            <Picker.Item label="300 tirages" value={300} />
+          </Picker>
         </View>
-
-        <View style={styles.potOption}>
-          <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Jouer avec le pot</Text>
-              <Switch value={props.potOption} onChange={props.potSelect}/>
-          </View>
+      </View>
+      <View style={styles.potOption}>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Jouer avec le pot</Text>
+          <Switch value={props.potOption} onChange={props.potSelect}/>
         </View>
-        <Text style={{display: errorMsg ? 'flex' : 'none', color: 'red', marginTop: 10}}>{errorMsg}</Text>
-        <Button title="Commencer la partie !" containerStyle={{marginTop: 20, marginBottom: 20}} titleStyle={{fontSize: 20, paddingLeft: 10, paddingRight: 10}} onPress={launchGame} />
-      </ScrollView>
-    );
+      </View>
+      <Text style={{display: errorMsg ? 'flex' : 'none', color: 'red', marginTop: 10}}>{errorMsg}</Text>
+      <Button title="Commencer la partie !" containerStyle={styles.button} titleStyle={styles.buttonTitle} onPress={() => launchGame()} />
+    </ScrollView>
+  );
 }
+
+export default SetupScreen
 
 const styles = StyleSheet.create({
   scrollview: {
@@ -125,9 +122,10 @@ const styles = StyleSheet.create({
     height: 40,
   },
   section: {
-    display: 'flex',
+    width: '100%',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   pageTitle: {
       fontSize: 40,
@@ -136,7 +134,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    textAlignVertical: 'center',
     marginRight: 8,
     marginLeft: 10
   },
@@ -145,12 +142,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  addLink: {
+    color: 'black',
+    marginLeft: 2,
+    marginBottom: 2
+  },
   bonusText: {
     marginLeft: 10,
     fontSize: 14
   },
+  picker: {
+    height: 40, 
+    width: 150,
+  },
   errorMsg: {
     fontSize: 20,
     color: 'red'
+  },
+  button: {
+    marginTop: 20, 
+    marginBottom: 20
+  },
+  buttonTitle: {
+    fontSize: 20, 
+    paddingLeft: 10, 
+    paddingRight: 10
   }
 });

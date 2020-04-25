@@ -4,15 +4,17 @@ import { Button } from 'react-native-elements';
 import phrases from '../../assets/phrases.json';
 import Countdown from '../countdown'
 
-export default TirageScreen = (props) => {
+const TirageScreen = (props) => {
 
-  const [timer, setTimer] = useState(0);
+  const handleDrink = (playerIndex, gorgees) => {
+    addGorgees(playerIndex, gorgees)
+    props.addCurrentRound()
+  }
 
-  handleDrink = (playerIndex, gorgees) => {   
+  const addGorgees = (playerIndex, gorgees) => {
     let playersTmp = props.players
     playersTmp[playerIndex].drinks += gorgees
     props.setPlayers(playersTmp)
-    setTimer(60)
   }
 
   // console.log('TIRAGE props', props);
@@ -27,32 +29,58 @@ export default TirageScreen = (props) => {
   let rdmGorgeesNumber = Math.floor(Math.random() * 6);
   let selectedGorgees = gorgees[rdmGorgeesNumber]
 
+  // coeff : 
+  // classique : xx%
+  // jeu-solo: xx%
+  // jeu-multi: xx%
+  // pot-add: xx%
+  // pot-drink: xx%
+
+  switch (selectedPhrase.type) {
+    case 'classique': null //
+    break;
+    case 'jeu-solo': null //
+    break;
+    case 'jeu-multi': null //
+    break;
+    case 'pot-add': props.setPot(selectedGorgees) //
+    break;
+    case 'pot-drink': props.setPot(0) //
+    break;
+}
+
   return (
     <View style={styles.container}>
-    <TouchableOpacity style={styles.leftMenu} clickable={true} onPress={() => props.navigation.navigate('Setup')}>
+      <TouchableOpacity style={styles.leftMenu} clickable={true} onPress={() => props.navigation.navigate('Setup')}>
         <Image style={styles.menuIcons} source={require('../../assets/setup.jpg')} />
         <Text style={styles.menuTitle}>Joueurs/Alcools</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.rightMenu} onPress={() => props.navigation.navigate('Finish')}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.rightMenu} onPress={() => props.navigation.navigate('Finish')}>
         <Image style={styles.menuIcons} source={require('../../assets/finish.jpg')} />
         <Text style={styles.menuTitle}>Terminer la partie</Text>
-    </TouchableOpacity>
-    <View style={styles.centralTirage}>
+      </TouchableOpacity>
+      <View style={styles.centralTirage}>
         <Text style={styles.tirageText}>{selectedPhrase.type === "classique" || selectedPhrase.type === "pot" || selectedPhrase.type === "jeu-solo" ?  selectedPlayer.name : null} {selectedPhrase.text1} {selectedGorgees} {selectedGorgees > 1 ? "gorgées" : 'gorgée'} de {props.alcools[0].name}</Text>
         {selectedPhrase.type === "classique" || selectedPhrase.type === "pot" ?
         <>
             <Countdown selectedGorgees={selectedGorgees} />
-            <Button title="C'est bu !" titleStyle={{fontSize: 20,  paddingLeft: 10, paddingRight: 10}} onPress={() => handleDrink(rdmPlayerNumber, selectedGorgees)} />
+            <Button title="C'est bu !" titleStyle={styles.buttonBigTitle} onPress={() => handleDrink(rdmPlayerNumber, selectedGorgees)} />
         </>
         :
         <View style={styles.multiTirage}>
-            {props.players.filter(item => item.name).map((item, i) => <Button containerStyle={{marginRight: 10}} titleStyle={{fontSize: 16, color: 'white',  paddingLeft: 10, paddingRight: 10}} buttonStyle={{backgroundColor: 'green'}} key={i} title={item.name} type="outline" onPress={() => handleDrink(i, selectedGorgees)} />)}
+            {activePlayers.map((item, i) => <Button containerStyle={styles.button} titleStyle={styles.buttonSmallTitle} buttonStyle={{backgroundColor: 'green'}} key={i} title={item.name} type="outline" onPress={() => handleDrink(i, selectedGorgees)} />)}
         </View>
         }
-    </View>
+      </View>
+      <View style={styles.stats}>
+        <Text style={styles.roundText}>Tirage {props.currentRound}/{props.rounds}</Text>
+        <Text style={styles.roundText}>Pot {props.pot}</Text>
+      </View>
     </View>
   );
 }
+
+export default TirageScreen
 
 const styles = StyleSheet.create({
   container: {
@@ -100,8 +128,36 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   multiTirage: {
+    flexWrap: "wrap",
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 20
+    justifyContent: 'center',
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20
+  },
+  button: {
+    marginRight: 10,
+    marginBottom: 10
+  },
+  buttonSmallTitle: {
+    fontSize: 16, 
+    color: 'white',
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  buttonBigTitle: {
+    fontSize: 20, 
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  stats: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20
+  },
+  roundText: {
+    fontSize: 20,
   }
 });

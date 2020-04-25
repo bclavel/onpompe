@@ -67,7 +67,6 @@ export default class Countdown extends React.Component {
     }
 }
 
-
 const styles = StyleSheet.create({
     tirageTimer: {
       fontSize: 60,
