@@ -4,17 +4,15 @@ import { Button, Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const SetupScreen = (props) => {
-  let activePlayers = props.players.filter(item => item.name)
-  let activeAlcools = props.alcools.filter(item => item.name)
-
   const [errorMsg, setErrorMsg] = useState(null);
 
+  // todo: prendre en compte le décochage de l'alcool pour démarrer la partie
   const launchGame = () => {
-    if (activePlayers.length >= 2 && activeAlcools.length >= 1) {
+    if (props.activePlayers.length >= 2 && props.activeAlcools.length >= 1) {
       props.navigation.navigate('Tirage')
-    } else if (activePlayers.length < 2 && activeAlcools.length >= 1) {
+    } else if (props.activePlayers.length < 2 && props.activeAlcools.length >= 1) {
       setErrorMsg("Veuillez définir au moins 2 jouers")
-    } else if (activePlayers.length >= 2 && activeAlcools.length < 1) {
+    } else if (props.activePlayers.length >= 2 && props.activeAlcools.length < 1) {
       setErrorMsg("Veuillez définir au moins 1 alcool")
     } else {
       setErrorMsg("Veuillez définir au moins 2 joueurs et 1 alcool")
@@ -22,8 +20,8 @@ const SetupScreen = (props) => {
   }
 
   useEffect(() => {
-    if (activePlayers.length >= 2 && activeAlcools.length >= 1) setErrorMsg(null)
-  }, [activePlayers, activeAlcools])
+    if (props.activePlayers.length >= 2 && props.activeAlcools.length >= 1) setErrorMsg(null)
+  }, [props.activePlayers, props.activeAlcools])
   
   return (
     <ScrollView contentContainerStyle={styles.scrollview} centerContent='true'>
@@ -32,8 +30,8 @@ const SetupScreen = (props) => {
         <Text style={styles.sectionTitle}>Joueurs</Text>
         {props.players.map((item,i)  => (
           <View key={i} style={styles.input}>
-            <Input placeholder={item.placeholder} value={item.name} containerStyle={{width: '93%'}} onChangeText={text => props.changePlayerName(text, i)} />
-            <Icon name="remove" size={15} style={{padding: 8}} color="grey" onPress={() => props.removePlayer(i)} />
+            <Input placeholder='Nom du joueur' value={item.name} containerStyle={{width: '93%'}} onChangeText={text => props.changePlayerName(text, i)} />
+            <Icon name="remove" size={15} style={{padding: 7}} color="grey" onPress={() => props.removePlayer(i)} />
           </View>
         ))}
         <Button icon={<Icon name="plus" size={15} color="grey" />} titleStyle={styles.addLink} type='clear' title="Ajouter un joueur" onPress={props.addPlayer} />
@@ -46,8 +44,8 @@ const SetupScreen = (props) => {
         <View style={{display: props.alcoolOption ? 'flex' : 'none', width: '100%', alignItems: 'flex-start'}}>
           {props.alcools.map((item,i)  => (
             <View key={i} style={styles.input}>
-              <Input placeholder={item.placeholder} value={item.name} containerStyle={{width: '93%'}} onChangeText={text => props.changeAlcoolName(text, i)} />
-              <Icon name="remove" size={15} style={{padding: 8}} color="grey" onPress={() => props.removeAlcool(i)} />
+              <Input placeholder="Alcool" value={item.name} containerStyle={{width: '93%'}} onChangeText={text => props.changeAlcoolName(text, i)} />
+              <Icon name="remove" size={15} style={{padding: 7}} color="grey" onPress={() => props.removeAlcool(i)} />
             </View>
           ))}
           <Button icon={<Icon name="plus" size={15} color="grey" />} titleStyle={styles.addLink} type='clear' title="Ajouter un alcool" onPress={props.addAlcool} />

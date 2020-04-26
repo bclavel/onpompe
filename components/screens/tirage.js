@@ -1,51 +1,102 @@
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, Image, View, Text } from 'react-native';
-import { Button } from 'react-native-elements';
 import phrases from '../../assets/phrases.json';
-import Countdown from '../countdown'
+import Classique from '../tirageClassique'
+import Solo from '../tirageSolo'
+import Multi from '../tirageMulti'
 
 const TirageScreen = (props) => {
+  // console.log('TIRAGE props', props);
 
-  const handleDrink = (playerIndex, gorgees) => {
+  const handleDrinkSolo = (playerIndex, gorgees) => {
     addGorgees(playerIndex, gorgees)
     props.addCurrentRound()
   }
 
+  const handleDrinkMulti = (players, gorgees) => {
+    props.activePlayers.forEach((item, i) => {
+      for (let j=0; j<players.length;j++) {
+        if (item.id === players[j].id) {
+          addGorgees(i, gorgees)
+        }
+      }
+    })
+    props.addCurrentRound()
+  }
+
   const addGorgees = (playerIndex, gorgees) => {
-    let playersTmp = props.players
+    let playersTmp = props.activePlayers
     playersTmp[playerIndex].drinks += gorgees
     props.setPlayers(playersTmp)
   }
 
-  // console.log('TIRAGE props', props);
-  let activePlayers = props.players.filter(item => item.name)
-  let rdmPlayerNumber = Math.floor(Math.random() * activePlayers.length);
-  let selectedPlayer = activePlayers[rdmPlayerNumber]
+  let ratioPlayers = []  
+  props.activePlayers.forEach(item => {
+    let playerRatio = item.bonus*2
+    for (let i = 0; i < playerRatio; i++) {
+      ratioPlayers.push(item)
+    }
+  })
 
-  let rdmPhraseNumber = Math.floor(Math.random() * phrases.length);
-  let selectedPhrase = phrases[rdmPhraseNumber]
+  let rdmPlayerNumber = Math.floor(Math.random() * ratioPlayers.length);
+  let selectedPlayer = ratioPlayers[rdmPlayerNumber]
+  let selectedPlayerIndex = props.activePlayers.indexOf(selectedPlayer)
+
+  let rdmAlcoolNumber = Math.floor(Math.random() * props.activeAlcools.length);
+  let selectedAlcool = props.activeAlcools[rdmAlcoolNumber]
 
   const gorgees = [0.5,1,1.5,2,2.5,3]
   let rdmGorgeesNumber = Math.floor(Math.random() * 6);
   let selectedGorgees = gorgees[rdmGorgeesNumber]
 
-  // coeff : 
-  // classique : xx%
-  // jeu-solo: xx%
-  // jeu-multi: xx%
-  // pot-add: xx%
-  // pot-drink: xx%
+  let tirage = {type: null, phrase: null}
+  let rdmTirageNbr = Math.floor(Math.random() * 68);
+  if (rdmTirageNbr <= 29) tirage.type = 'classique'
+  else if (rdmTirageNbr >= 30 && rdmTirageNbr <= 44) tirage.type = 'jeu-solo'
+  else if (rdmTirageNbr >= 45 && rdmTirageNbr <= 59) tirage.type = 'jeu-multi'
+  else if (rdmTirageNbr >= 60 && rdmTirageNbr <= 64) tirage.type = 'pot-add'
+  else if (props.pot === 0 && rdmTirageNbr === 65) tirage.type = 'pot-add'
+  else if (props.pot != 0 && rdmTirageNbr === 65) tirage.type = 'pot-drink'
+  else if (rdmTirageNbr >= 66) tirage.type = 'pause'
+  else tirage.type = 'error !'
 
-  switch (selectedPhrase.type) {
-    case 'classique': null //
+  console.log('rdmTirageNbr', rdmTirageNbr);
+
+  let phrasesType = []
+  phrases.forEach(item => {
+    if (item.type === tirage.type) {
+      phrasesType.push(item)
+    }
+  })
+
+  let rdmPhraseNbr = Math.floor(Math.random() * phrasesType.length);
+  tirage.phrase = phrasesType[rdmPhraseNbr]
+
+  console.log('tirage', tirage);
+
+  // todo : tirer l'alcool au sort
+  // todo : s'assurer que le pot soit vide avant la fin de partie
+
+  let component
+
+  switch (tirage.type) {
+    case 'classique': 
+    component = <Classique selectedGorgees={selectedGorgees} handleDrinkSolo={handleDrinkSolo} selectedPlayerIndex={selectedPlayerIndex} />
     break;
-    case 'jeu-solo': null //
+    case 'jeu-solo': 
+    component = <Solo activePlayers={props.activePlayers} selectedGorgees={selectedGorgees} handleDrinkSolo={handleDrinkSolo} selectedPlayerIndex={selectedPlayerIndex} />
     break;
-    case 'jeu-multi': null //
+    case 'jeu-multi': 
+    component = <Multi activePlayers={props.activePlayers} selectedGorgees={selectedGorgees} handleDrinkMulti={handleDrinkMulti} selectedPlayerIndex={selectedPlayerIndex} />
     break;
-    case 'pot-add': props.setPot(selectedGorgees) //
+    case 'pot-add': 
+    props.setPot(selectedGorgees) //
     break;
-    case 'pot-drink': props.setPot(0) //
+    case 'pot-drink': 
+    props.setPot(0) //
+    break;
+    case 'pause': 
+    null //
     break;
 }
 
@@ -60,21 +111,12 @@ const TirageScreen = (props) => {
         <Text style={styles.menuTitle}>Terminer la partie</Text>
       </TouchableOpacity>
       <View style={styles.centralTirage}>
-        <Text style={styles.tirageText}>{selectedPhrase.type === "classique" || selectedPhrase.type === "pot" || selectedPhrase.type === "jeu-solo" ?  selectedPlayer.name : null} {selectedPhrase.text1} {selectedGorgees} {selectedGorgees > 1 ? "gorgées" : 'gorgée'} de {props.alcools[0].name}</Text>
-        {selectedPhrase.type === "classique" || selectedPhrase.type === "pot" ?
-        <>
-            <Countdown selectedGorgees={selectedGorgees} />
-            <Button title="C'est bu !" titleStyle={styles.buttonBigTitle} onPress={() => handleDrink(rdmPlayerNumber, selectedGorgees)} />
-        </>
-        :
-        <View style={styles.multiTirage}>
-            {activePlayers.map((item, i) => <Button containerStyle={styles.button} titleStyle={styles.buttonSmallTitle} buttonStyle={{backgroundColor: 'green'}} key={i} title={item.name} type="outline" onPress={() => handleDrink(i, selectedGorgees)} />)}
-        </View>
-        }
+        <Text style={styles.tirageText}>{tirage.type === "classique" || tirage.type === "pot" || tirage.type === "jeu-solo" ?  selectedPlayer.name : null} {tirage.phrase.text1} {selectedGorgees} {selectedGorgees > 1 ? "gorgées" : 'gorgée'} de {selectedAlcool.name}</Text>
+        {component}
       </View>
       <View style={styles.stats}>
         <Text style={styles.roundText}>Tirage {props.currentRound}/{props.rounds}</Text>
-        <Text style={styles.roundText}>Pot {props.pot}</Text>
+        <Text style={styles.roundText}>Taille du pot : {props.pot}</Text>
       </View>
     </View>
   );
@@ -153,11 +195,11 @@ const styles = StyleSheet.create({
   },
   stats: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     marginBottom: 20
   },
   roundText: {
-    fontSize: 20,
+    fontSize: 18,
   }
 });

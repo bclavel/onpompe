@@ -10,43 +10,46 @@ const Stack = createStackNavigator();
 export default function App() {
 
   let initPlayers = [{
+    id: 1,
     name: null,
-    placeholder: 'Nom du joueur',
     bonus: 1,
     drinks: 0
   },{
+    id: 2,
     name: null,
-    placeholder: 'Nom du joueur',
     bonus: 1,
     drinks: 0
   },{
+    id: 3,
     name: null,
-    placeholder: 'Nom du joueur',
     bonus: 1,
     drinks: 0
   },{
+    id: 4,
     name: null,
-    placeholder: 'Nom du joueur',
     bonus: 1,
     drinks: 0
   }]
 
   let initAlcools = [{
     name: null,
-    placeholder: 'Alcool',
     value: 0
   },{
     name: null,
-    placeholder: 'Alcool',
     value: 0
   },{
     name: null,
-    placeholder: 'Alcool',
     value: 0
   }]
 
   const [players, setPlayers] = useState([...initPlayers]);
+  let activePlayers = players.filter(item => item.name)
+  console.log('players', players);
+  
+
   const [alcools, setAlcools] = useState([...initAlcools]);
+  let activeAlcools = alcools.filter(item => item.name)
+
   const [alcoolOption, setAlcoolOption] = useState(true);
   const [bonusOption, setBonusOption] = useState(true);
   const [potOption, setPotOption] = useState(false);
@@ -57,8 +60,8 @@ export default function App() {
   const handleAddPlayer = () => {
     let playersTmp = [...players]
     playersTmp.push({
+        id: players.length + 1,
         name: null,
-        placeholder: 'Nom du joueur',
         bonus: 1,
         drinks: 0
     })
@@ -85,7 +88,6 @@ export default function App() {
     let alcoolsTmp = [...alcools]
     alcoolsTmp.push({
       name: null,
-      placeholder: 'Alcool',
       value: 0,
     })
     setAlcools(alcoolsTmp)
@@ -138,7 +140,9 @@ export default function App() {
           {props => <SetupScreen 
           {...props} 
           players={players}
+          activePlayers={activePlayers}
           alcools={alcools}
+          activeAlcools={activeAlcools}
           alcoolOption={alcoolOption}
           bonusOption={bonusOption}
           potOption={potOption}
@@ -159,9 +163,9 @@ export default function App() {
         <Stack.Screen name="Tirage">
           {props => <TirageScreen 
           {...props}
-          players={players}
+          activePlayers={activePlayers}
           setPlayers={setPlayers}
-          alcools={alcools}
+          activeAlcools={activeAlcools}
           alcoolOption={alcoolOption}
           bonusOption={bonusOption}
           potOption={potOption}
@@ -175,11 +179,8 @@ export default function App() {
         <Stack.Screen name="Finish">
           {props => <FinishScreen 
           {...props}
-          players={players}
-          alcools={alcools}
-          alcoolOption={alcoolOption}
-          bonusOption={bonusOption}
-          potOption={potOption}
+          activePlayers={activePlayers}
+          activeAlcools={activeAlcools}
           rounds={rounds}
           setCurrentRound={setCurrentRound}
           resetDrintCount={handleResetDrinkCount}

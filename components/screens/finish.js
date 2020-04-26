@@ -3,6 +3,10 @@ import {StyleSheet, Image, View, Text} from 'react-native';
 import { Button } from 'react-native-elements';
 
 const FinishScreen = (props) => {
+  // console.log('FINISH props', props);
+
+  // todo : ajouter des stats sur les rounds, le total d'alcools bus
+  // todo : mettre un mot pour celui qui a bu le pot
 
   const handleFinishGame = () => {
     props.setCurrentRound(1)
@@ -10,8 +14,7 @@ const FinishScreen = (props) => {
     props.navigation.navigate('Setup')
   }
 
-  // console.log('FINISH props', props);
-  let finalPlayers = props.players.filter(item => item.name).sort((a,b) => a.drinks < b.drinks)
+  let finalPlayers = props.activePlayers.sort((a,b) => a.drinks < b.drinks)
 
   return (
     <View style={styles.container}>
