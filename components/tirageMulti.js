@@ -6,11 +6,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const TirageMulti = (props) => {
   // console.log('MULTI props', props);
 
+  // todo : gérer le cas où plusieurs multi sont tirés de suite, on doit décocher les selectedPlayers
+  // todo : gérer l'obligation de sélectionner au moins 1 player pour valider
+
   const [players, setPlayers] = useState([...props.activePlayers])
   const [selectedPlayers, setSelectedPlayers] = useState([])
-
-// todo : gérer le cas où plusieurs multi sont tirés de suite, on doit décocher les selectedPlayers
-// todo : gérer l'obligation de sélectionner au moins 1 player pour valider
 
   useEffect(() => {
     let playersTmp = [...players]

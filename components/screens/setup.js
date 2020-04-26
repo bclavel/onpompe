@@ -4,9 +4,11 @@ import { Button, Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const SetupScreen = (props) => {
+  // console.log('SETUP props', props);
+  // todo: prendre en compte le décochage de l'alcool pour démarrer la partie
+
   const [errorMsg, setErrorMsg] = useState(null);
 
-  // todo: prendre en compte le décochage de l'alcool pour démarrer la partie
   const launchGame = () => {
     if (props.activePlayers.length >= 2 && props.activeAlcools.length >= 1) {
       props.navigation.navigate('Tirage')

@@ -7,6 +7,11 @@ import Multi from '../tirageMulti'
 
 const TirageScreen = (props) => {
   // console.log('TIRAGE props', props);
+  
+  // todo : s'assurer que le pot soit vide avant la fin de partie
+  // todo : mettre toutes les phrases du tirage dans le composant sattelite
+  // todo : cleaner les styles (supprimer ceux partis dans les composants satellites)
+  // todo : créer les composants pot-add, pot-drink & pause
 
   const handleDrinkSolo = (playerIndex, gorgees) => {
     addGorgees(playerIndex, gorgees)
@@ -60,8 +65,6 @@ const TirageScreen = (props) => {
   else if (rdmTirageNbr >= 66) tirage.type = 'pause'
   else tirage.type = 'error !'
 
-  console.log('rdmTirageNbr', rdmTirageNbr);
-
   let phrasesType = []
   phrases.forEach(item => {
     if (item.type === tirage.type) {
@@ -71,11 +74,6 @@ const TirageScreen = (props) => {
 
   let rdmPhraseNbr = Math.floor(Math.random() * phrasesType.length);
   tirage.phrase = phrasesType[rdmPhraseNbr]
-
-  console.log('tirage', tirage);
-
-  // todo : tirer l'alcool au sort
-  // todo : s'assurer que le pot soit vide avant la fin de partie
 
   let component
 
@@ -90,15 +88,15 @@ const TirageScreen = (props) => {
     component = <Multi activePlayers={props.activePlayers} selectedGorgees={selectedGorgees} handleDrinkMulti={handleDrinkMulti} selectedPlayerIndex={selectedPlayerIndex} />
     break;
     case 'pot-add': 
-    props.setPot(selectedGorgees) //
+    props.setPot(selectedGorgees)
     break;
     case 'pot-drink': 
-    props.setPot(0) //
+    props.setPot(0)
     break;
     case 'pause': 
-    null //
+    null
     break;
-}
+  }
 
   return (
     <View style={styles.container}>

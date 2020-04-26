@@ -44,8 +44,6 @@ export default function App() {
 
   const [players, setPlayers] = useState([...initPlayers]);
   let activePlayers = players.filter(item => item.name)
-  console.log('players', players);
-  
 
   const [alcools, setAlcools] = useState([...initAlcools]);
   let activeAlcools = alcools.filter(item => item.name)
