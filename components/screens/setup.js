@@ -61,7 +61,7 @@ const SetupScreen = (props) => {
         <View style={{display: props.bonusOption ? 'flex' : 'none', width: '100%', alignItems: 'flex-start', marginTop: 8}}>
           {props.players.map((item,i) => (
             <React.Fragment key={i}>
-              <Text style={styles.bonusText}>{item.name || item.placeholder} : {item.bonus * 100}%</Text>
+              <Text style={styles.bonusText}>{item.name || "Nom du joueur"} : {item.bonus * 100}%</Text>
               {props.bonusOption && <Slider style={{width: '100%'}} minimumValue={0.5} maximumValue={2} step={0.5} value={item.bonus} onValueChange={value => props.bonusSlide(value, i)} /> }
             </React.Fragment>
           ))}

@@ -7,10 +7,11 @@ const TirageMulti = (props) => {
   // console.log('MULTI props', props);
 
   // todo : gérer le cas où plusieurs multi sont tirés de suite, on doit décocher les selectedPlayers
-  // todo : gérer l'obligation de sélectionner au moins 1 player pour valider
 
   const [players, setPlayers] = useState([...props.activePlayers])
   const [selectedPlayers, setSelectedPlayers] = useState([])
+
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     let playersTmp = [...players]
@@ -29,19 +30,40 @@ const TirageMulti = (props) => {
     setPlayers(playersTmp)
   }
 
+  const handleSubmit = () => {
+    if (selectedPlayers.length < 1) {
+      setErrorMsg('Veuillez sélectionner au moins un joueur')
+    } else {
+      props.handleDrinkMulti(selectedPlayers, props.gorgees)
+    }
+  }
+
   return (
-      <>
-        <View style={styles.multiTirage}>
-            {players.map((item, i) => <Button icon={item.selected ? <Icon name="check" size={15} color="white" /> : null}containerStyle={styles.smallButton} titleStyle={styles.buttonSmallTitle} buttonStyle={{backgroundColor: 'green'}} key={i} title={item.name} type="outline" onPress={() => handleSelectPlayer(i, item.selected)} />)}
-        </View>
-        <Button title="Valider" containerStyle={styles.bigButton} titleStyle={styles.buttonBigTitle} onPress={() => props.handleDrinkMulti(selectedPlayers, props.selectedGorgees)} />
-      </>
+    <View style={styles.centralTirage}>
+      <Text style={styles.tirageText}>{props.phrase.text1} {props.gorgees} {props.gorgees > 1 ? "gorgées" : 'gorgée'} de {props.alcool.name}</Text>
+      <View style={styles.multiTirage}>
+          {players.map((item, i) => <Button icon={item.selected ? <Icon name="check" size={15} color="white" /> : null}containerStyle={styles.smallButton} titleStyle={styles.buttonSmallTitle} buttonStyle={{backgroundColor: 'green'}} key={i} title={item.name} type="outline" onPress={() => handleSelectPlayer(i, item.selected)} />)}
+      </View>
+      <Text style={{display: errorMsg ? 'flex' : 'none', color: 'red', marginTop: 10}}>{errorMsg}</Text>
+      <Button title="Valider" containerStyle={styles.bigButton} titleStyle={styles.buttonBigTitle} onPress={() => handleSubmit()} />
+    </View>
   );
 }
 
 export default TirageMulti
 
 const styles = StyleSheet.create({
+  centralTirage: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tirageText: {
+    width: '80%',
+    fontSize: 30,
+    textAlign: 'center'
+  },
   multiTirage: {
     flexWrap: "wrap",
     flexDirection: 'row',

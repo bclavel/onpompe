@@ -13,7 +13,7 @@
       "id": 3,
       "type": "pot-add",
       "text1": "tu verses l'équivalent de",
-      "text2": "gorgées dans le pot"
+      "text2": "dans le pot"
     },{
       "id": 4,
       "type": "classique",
@@ -27,7 +27,7 @@
     },{
       "id": 6,
       "type": "classique",
-      "text1": "arrête de te mentir et accepte les problèmes en buvant",
+      "text1": "arrête de te mentir et accepte tes problèmes en buvant",
       "text2": ""
     },{
       "id": 7,
@@ -52,7 +52,7 @@
     },{
       "id": 11,
       "type": "classique",
-      "text1": "tu pues de la gueule et tu arranges cela en buvant",
+      "text1": "tu pues de la gueule et tu arranges ça en buvant",
       "text2": ""
      },{
       "id": 12,
@@ -103,6 +103,11 @@
       "id": 21,
       "type": "pause",
       "text1": "Une petite pause bien méritée !",
+      "text2": ""
+    },{
+      "id": 22,
+      "type": "time-up",
+      "text1": "Pas assez rapide !! Pour ta peine, uu bois en plus",
       "text2": ""
     }
   ]

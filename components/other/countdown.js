@@ -8,7 +8,7 @@ export default class Countdown extends React.Component {
     }
 
     componentDidMount() {        
-        switch (this.props.selectedGorgees) {
+        switch (this.props.gorgees) {
             case 0.5: this.setState({seconds: 20})
             break;
             case 1: this.setState({seconds: 30})
@@ -21,6 +21,8 @@ export default class Countdown extends React.Component {
             break;
             case 3: this.setState({seconds: 100})
             break;
+            case 'pot': this.setState({seconds: 120})
+            break;
         }
 
         this.myInterval = setInterval(() => {
@@ -30,6 +32,9 @@ export default class Countdown extends React.Component {
                 this.setState(({ seconds }) => ({
                     seconds: seconds - 1
                 }))
+            } else if (seconds === 0) {
+                console.log('time up batar !');
+                this.props.handleTimeUp()
             }
         }, 1000)
     }
@@ -39,8 +44,8 @@ export default class Countdown extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.selectedGorgees !== prevProps.selectedGorgees){
-            switch (this.props.selectedGorgees) {
+        if(this.props.gorgees !== prevProps.gorgees){
+            switch (this.props.gorgees) {
                 case 0.5: this.setState({seconds: 20})
                 break;
                 case 1: this.setState({seconds: 30})
@@ -53,12 +58,14 @@ export default class Countdown extends React.Component {
                 break;
                 case 3: this.setState({seconds: 100})
                 break;
+                case 'pot': this.setState({seconds: 120})
+                break;
             }
         }
       }
 
     render() {        
-        const { seconds } = this.state
+        const { seconds } = this.state        
         return (
             <View>
                 <Text style={styles.tirageTimer}>{seconds}</Text>
