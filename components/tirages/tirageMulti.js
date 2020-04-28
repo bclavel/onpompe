@@ -6,8 +6,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const TirageMulti = (props) => {
   // console.log('MULTI props', props);
 
-  // todo : gérer le cas où plusieurs multi sont tirés de suite, on doit décocher les selectedPlayers
-
   const [players, setPlayers] = useState([...props.activePlayers])
   const [selectedPlayers, setSelectedPlayers] = useState([])
 
@@ -34,13 +32,14 @@ const TirageMulti = (props) => {
     if (selectedPlayers.length < 1) {
       setErrorMsg('Veuillez sélectionner au moins un joueur')
     } else {
+      setSelectedPlayers([])
       props.handleDrinkMulti(selectedPlayers, props.gorgees)
     }
   }
 
   return (
     <View style={styles.centralTirage}>
-      <Text style={styles.tirageText}>{props.phrase.text1} {props.gorgees} {props.gorgees > 1 ? "gorgées" : 'gorgée'} de {props.alcool.name}</Text>
+      <Text style={styles.tirageText}>{props.phrase.text1} {props.gorgees} {props.gorgees > 1 ? "gorgées" : 'gorgée'} {props.alcool ? "de " + props.alcool.name : "de son verre"}</Text>
       <View style={styles.multiTirage}>
           {players.map((item, i) => <Button icon={item.selected ? <Icon name="check" size={15} color="white" /> : null}containerStyle={styles.smallButton} titleStyle={styles.buttonSmallTitle} buttonStyle={{backgroundColor: 'green'}} key={i} title={item.name} type="outline" onPress={() => handleSelectPlayer(i, item.selected)} />)}
       </View>
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
   },
   tirageText: {
     width: '80%',
-    fontSize: 30,
+    fontSize: 36,
     textAlign: 'center'
   },
   multiTirage: {

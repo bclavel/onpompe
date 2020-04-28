@@ -8,7 +8,7 @@ const TirageClassique = (props) => {
 
   return (
     <View style={styles.centralTirage}>
-      <Text style={styles.tirageText}>{props.selectedPlayer.name} {props.phrase.text1} {props.gorgees} {props.gorgees > 1 ? "gorgées" : 'gorgée'} de {props.alcool.name}</Text>
+      <Text style={styles.tirageText}>{props.selectedPlayer.name} {props.phrase.text1} {props.gorgees} {props.gorgees > 1 ? "gorgées" : 'gorgée'} {props.alcool ? "de " + props.alcool.name : "de ton verre"} </Text>
       <Countdown gorgees={props.gorgees} handleTimeUp={props.handleTimeUp}/>
       <Button title="C'est bu !" titleStyle={styles.buttonBigTitle} onPress={() => props.handleDrinkSolo(props.selectedPlayerIndex, props.gorgees)} />
     </View>
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   tirageText: {
     width: '80%',
-    fontSize: 30,
+    fontSize: 36,
     textAlign: 'center'
   },
   buttonBigTitle: {

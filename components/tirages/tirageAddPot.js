@@ -13,7 +13,7 @@ const TirageAddPot = (props) => {
 
   return (
     <View style={styles.centralTirage}>
-      <Text style={styles.tirageText}>{props.selectedPlayer.name} {props.phrase.text1} {props.gorgees} {props.gorgees > 1 ? "gorgées" : 'gorgée'} de {props.alcool.name} {props.phrase.text2}</Text>
+      <Text style={styles.tirageText}>{props.selectedPlayer.name} {props.phrase.text1} {props.gorgees} {props.gorgees > 1 ? "gorgées" : 'gorgée'} {props.alcool ? "de " + props.alcool.name : "de ton verre"} {props.phrase.text2}</Text>
       <Button title="C'est fait !" containerStyle={styles.bigButton} titleStyle={styles.buttonBigTitle} onPress={() => addPot()} />
     </View>
   );
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   tirageText: {
     width: '80%',
-    fontSize: 30,
+    fontSize: 36,
     textAlign: 'center'
   },
   buttonBigTitle: {

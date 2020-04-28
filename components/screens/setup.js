@@ -6,13 +6,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const SetupScreen = (props) => {
   // console.log('SETUP props', props);
   // todo: prendre en compte le décochage de l'alcool pour démarrer la partie
+  // todo : quand une partie est en cours et qu'on clique sur les options, le CTA "Commencer la partie" doit être "Continuer la partie"
 
   const [errorMsg, setErrorMsg] = useState(null);
 
   const launchGame = () => {
-    if (props.activePlayers.length >= 2 && props.activeAlcools.length >= 1) {
+    if (props.activePlayers.length >= 2 && (props.activeAlcools.length >= 1 || !props.alcoolOption)) {
       props.navigation.navigate('Tirage')
-    } else if (props.activePlayers.length < 2 && props.activeAlcools.length >= 1) {
+    } else if (props.activePlayers.length < 2 && (props.activeAlcools.length >= 1 || !props.alcoolOption)) {
       setErrorMsg("Veuillez définir au moins 2 jouers")
     } else if (props.activePlayers.length >= 2 && props.activeAlcools.length < 1) {
       setErrorMsg("Veuillez définir au moins 1 alcool")

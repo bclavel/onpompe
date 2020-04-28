@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   tirageText: {
     width: '80%',
-    fontSize: 30,
+    fontSize: 36,
     textAlign: 'center'
   },
   buttonBigTitle: {

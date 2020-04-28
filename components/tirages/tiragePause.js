@@ -9,12 +9,11 @@ const TiragePause = (props) => {
   return (
     <View style={styles.centralTirage}>
         <Text style={styles.tirageText}>{props.phrase.text1}</Text>
-        <Countdown gorgees={3} />
+        <Countdown gorgees={3} handleTimeUp={props.handleTimeUp} />
         <Button title="Passer" titleStyle={styles.buttonBigTitle} onPress={() => props.handleSkip()} />
     </View>
   );
 }
-
 
 export default TiragePause
 
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
   },
   tirageText: {
     width: '80%',
-    fontSize: 30,
+    fontSize: 36,
     textAlign: 'center'
   }
 });

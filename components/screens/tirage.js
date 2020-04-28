@@ -64,34 +64,41 @@ const TirageScreen = (props) => {
   })
 
   // Select random player
-  let rdmPlayerNumber = Math.floor(Math.random() * ratioPlayers.length);
-  let selectedPlayer = ratioPlayers[rdmPlayerNumber]
-  let selectedPlayerIndex = props.activePlayers.indexOf(selectedPlayer)
+  let selectedPlayer, selectedPlayerIndex
+  if (!timeUp) {
+    let rdmPlayerNumber = Math.floor(Math.random() * ratioPlayers.length);
+    selectedPlayer = ratioPlayers[rdmPlayerNumber]
+    selectedPlayerIndex = props.activePlayers.indexOf(selectedPlayer)
+  }
   
   // Select random alcool
-  let rdmAlcoolNumber = Math.floor(Math.random() * props.activeAlcools.length);
-  initialTirage.alcool = props.activeAlcools[rdmAlcoolNumber]
+  if (props.alcoolOption) {
+    let rdmAlcoolNumber = Math.floor(Math.random() * props.activeAlcools.length);
+    initialTirage.alcool = props.activeAlcools[rdmAlcoolNumber]
+  }
 
   // Select random gorgees
   const gorgeesList = [0.5,1,1.5,2,2.5,3]
-  let rdmGorgeesNumber = Math.floor(Math.random() * 6);
-  initialTirage.gorgees = gorgeesList[rdmGorgeesNumber]
+  if (!timeUp) {
+    let rdmGorgeesNumber = Math.floor(Math.random() * 6);
+    initialTirage.gorgees = gorgeesList[rdmGorgeesNumber]
+  }
 
   // Select tirage type
   if (timeUp) {
-    console.log('TIRAGE times up fdp !');
+    // console.log('TIRAGE times up fdp !');
     initialTirage.type = 'time-up'
     initialTirage.gorgees = 3
-    setTimeUp(false)
+    // setTimeUp(false)
   } else {
-    let rdmTirageNbr = Math.floor(Math.random() * 68);
+    let rdmTirageNbr = Math.floor(Math.random() * 67);
     if (rdmTirageNbr <= 29) initialTirage.type = 'classique'
     else if (rdmTirageNbr >= 30 && rdmTirageNbr <= 44 && props.activePlayers.length <= 2) initialTirage.type = 'classique'
     else if (rdmTirageNbr >= 30 && rdmTirageNbr <= 44 && props.activePlayers.length > 2) initialTirage.type = 'jeu-solo'
     else if (rdmTirageNbr >= 45 && rdmTirageNbr <= 59) initialTirage.type = 'jeu-multi'
     else if (rdmTirageNbr >= 60 && rdmTirageNbr <= 64) initialTirage.type = 'pot-add'
     else if (props.pot === 0 && rdmTirageNbr === 65) initialTirage.type = 'pot-add'
-    else if (props.pot != 0 && rdmTirageNbr === 65) initialTirage.type = 'pot-drink'
+    else if (props.pot !== 0 && rdmTirageNbr === 65) initialTirage.type = 'pot-drink'
     else if (rdmTirageNbr >= 66) initialTirage.type = 'pause'
     else console.log('error, no type set >> rdmTirageNbr + props.activePlayers', rdmTirageNbr, props.activePlayers.length)
   }
@@ -108,14 +115,15 @@ const TirageScreen = (props) => {
   
   // Define component based on tirage type
   let component
-  if (initialTirage.type === 'classique') component = <Classique selectedPlayer={selectedPlayer} selectedPlayerIndex={selectedPlayerIndex} alcool={initialTirage.alcool} gorgees={initialTirage.gorgees} phrase={initialTirage.phrase} handleDrinkSolo={handleDrinkSolo} handleTimeUp={handleTimeUp} />
+  if (initialTirage.type === 'classique' || initialTirage.type === 'time-up' ) component = <Classique selectedPlayer={selectedPlayer} selectedPlayerIndex={selectedPlayerIndex} alcool={initialTirage.alcool} gorgees={initialTirage.gorgees} phrase={initialTirage.phrase} handleDrinkSolo={handleDrinkSolo} handleTimeUp={handleTimeUp} />
   else if (initialTirage.type === 'jeu-solo') component = <Solo activePlayers={props.activePlayers} selectedPlayer={selectedPlayer} selectedPlayerIndex={selectedPlayerIndex} alcool={initialTirage.alcool} gorgees={initialTirage.gorgees} phrase={initialTirage.phrase} handleDrinkSolo={handleDrinkSolo} />
   else if (initialTirage.type === 'jeu-multi') component = <Multi activePlayers={props.activePlayers} alcool={initialTirage.alcool} gorgees={initialTirage.gorgees} phrase={initialTirage.phrase} handleDrinkMulti={handleDrinkMulti} />
   else if (initialTirage.type === 'pot-add') component = <AddPot selectedPlayer={selectedPlayer} alcool={initialTirage.alcool} gorgees={initialTirage.gorgees} phrase={initialTirage.phrase} pot={props.pot} setPot={props.setPot} handleDrinkMulti={handleDrinkMulti} />
-  else if (initialTirage.type === 'pot-drink') component = <DrinkPot selectedPlayer={selectedPlayer} phrase={initialTirage.phrase} pot={props.pot} setPot={props.setPot} handleDrinkMulti={handleDrinkMulti} />
-  else if (initialTirage.type === 'pause') component = <Pause phrase={initialTirage.phrase} phrase={initialTirage.phrase} handleSkip={handleSkip} />
+  else if (initialTirage.type === 'pot-drink') component = <DrinkPot selectedPlayer={selectedPlayer} selectedPlayerIndex={selectedPlayerIndex} phrase={initialTirage.phrase} pot={props.pot} setPot={props.setPot} handleDrinkSolo={handleDrinkSolo} handleTimeUp={handleTimeUp} />
+  else if (initialTirage.type === 'pause') component = <Pause phrase={initialTirage.phrase} phrase={initialTirage.phrase} handleSkip={handleSkip} handleTimeUp={handleTimeUp} />
 
   const [tirage, setTirage] = useState(initialTirage)
+  console.log("TIRAGE initialTirage", initialTirage);
 
   return (
     <View style={styles.container}>
@@ -150,21 +158,21 @@ const styles = StyleSheet.create({
     left: 10,
     top: 40,
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   rightMenu: {
     position: 'absolute',
     right: 10,
     top: 40,
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   menuIcons: {
-    width: 80, 
-    height: 50
+    width: 50, 
+    height: 50,
   },
   menuTitle: {
-    fontSize: 20
+    fontSize: 18
   },
   stats: {
     flexDirection: 'row',
