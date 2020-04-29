@@ -7,7 +7,7 @@ const TirageDrinkPot = (props) => {
   // console.log('DRINK POT props', props);
 
   const handleDrinkPot = () => {
-    props.handleDrinkSolo(props.selectedPlayerIndex, props.pot)
+    props.handleDrinkSolo(props.selectedPlayer)
     props.setPot(0)
   }
 

@@ -9,7 +9,7 @@ const TirageSolo = (props) => {
 
   const drinkSolo = (player) => {
     props.activePlayers.forEach((item, i) => {
-      if (player.id === item.id) props.handleDrinkSolo(i, props.gorgees)
+      if (player.id === item.id) props.handleDrinkSolo(player)
     })
   }
 

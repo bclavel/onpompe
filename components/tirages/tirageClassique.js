@@ -10,7 +10,7 @@ const TirageClassique = (props) => {
     <View style={styles.centralTirage}>
       <Text style={styles.tirageText}>{props.selectedPlayer.name} {props.phrase.text1} {props.gorgees} {props.gorgees > 1 ? "gorgées" : 'gorgée'} {props.alcool ? "de " + props.alcool.name : "de ton verre"} </Text>
       <Countdown gorgees={props.gorgees} handleTimeUp={props.handleTimeUp}/>
-      <Button title="C'est bu !" titleStyle={styles.buttonBigTitle} onPress={() => props.handleDrinkSolo(props.selectedPlayerIndex, props.gorgees)} />
+      <Button title="C'est bu !" titleStyle={styles.buttonBigTitle} onPress={() => props.handleDrinkSolo(props.selectedPlayer)} />
     </View>
   );
 }

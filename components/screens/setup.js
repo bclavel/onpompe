@@ -5,8 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const SetupScreen = (props) => {
   // console.log('SETUP props', props);
-  // todo: prendre en compte le décochage de l'alcool pour démarrer la partie
-  // todo : quand une partie est en cours et qu'on clique sur les options, le CTA "Commencer la partie" doit être "Continuer la partie"
+  // todo : popin warning conso alcool
 
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -86,7 +85,7 @@ const SetupScreen = (props) => {
         </View>
       </View>
       <Text style={{display: errorMsg ? 'flex' : 'none', color: 'red', marginTop: 10}}>{errorMsg}</Text>
-      <Button title="Commencer la partie !" containerStyle={styles.button} titleStyle={styles.buttonTitle} onPress={() => launchGame()} />
+      <Button title="J'ai soif !" containerStyle={styles.button} titleStyle={styles.buttonTitle} onPress={() => launchGame()} />
     </ScrollView>
   );
 }

@@ -13,34 +13,45 @@ const TirageScreen = (props) => {
   
   // todo : s'assurer que le pot soit vide avant la fin de partie
   // todo : finir de gérer le moment où le timer tombe à 0
+  // todo : gérer le cas de la pause dans le tableau des tirages
 
-  let initialTirage = {
-    type: null, 
-    phrase: null, 
-    gorgees: null, 
-    alcool: null
-  }
+  let tirage
+
+  // let tirage = {
+  //   type: null, 
+  //   phrase: null, 
+  //   gorgees: null, 
+  //   alcool: null
+  // }
+
+  // addTirage = (player, gorgees, alcool, type, phrase, isPot)
+
 
   const [timeUp, setTimeUp] = useState(false)
+  // let timeUp = false
 
-  const handleDrinkSolo = (playerIndex, gorgees) => {
-    addGorgees(playerIndex, gorgees)
-    props.addCurrentRound()
+  const handleDrinkSolo = (player) => {
+    addGorgees(selectedPlayerIndex, tirage.gorgees)
+    let drinkPlayers = []
+    drinkPlayers.push(player)
+    props.addTirage(drinkPlayers, tirage.gorgees, tirage.alcool, tirage.type, tirage.phrase)
   }
 
-  const handleDrinkMulti = (players, gorgees) => {
+  const handleDrinkMulti = (players) => {
     props.activePlayers.forEach((item, i) => {
       for (let j=0; j<players.length;j++) {
         if (item.id === players[j].id) {
-          addGorgees(i, gorgees)
+          addGorgees(i, tirage.gorgees)
         }
       }
     })
-    props.addCurrentRound()
+    props.addTirage(players, tirage.gorgees, tirage.alcool, tirage.type, tirage.phrase)
   }
 
   const handleTimeUp = () => {
     setTimeUp(true)
+    // timeUp = true
+    // props.addCurrentRound()
   }
 
   const handleSkip = () => {
@@ -69,61 +80,68 @@ const TirageScreen = (props) => {
     let rdmPlayerNumber = Math.floor(Math.random() * ratioPlayers.length);
     selectedPlayer = ratioPlayers[rdmPlayerNumber]
     selectedPlayerIndex = props.activePlayers.indexOf(selectedPlayer)
+  } else {
+    selectedPlayer = tirage.selectedPlayer
+    selectedPlayerIndex = tirage.selectedPlayerIndex
+    console.log('else timeup ! selectedPlayer >>', selectedPlayer);
+    
   }
   
   // Select random alcool
   if (props.alcoolOption) {
     let rdmAlcoolNumber = Math.floor(Math.random() * props.activeAlcools.length);
-    initialTirage.alcool = props.activeAlcools[rdmAlcoolNumber]
+    tirage.alcool = props.activeAlcools[rdmAlcoolNumber]
   }
 
   // Select random gorgees
-  const gorgeesList = [0.5,1,1.5,2,2.5,3]
+  const gorgeesList = [1,2,3,4]
   if (!timeUp) {
-    let rdmGorgeesNumber = Math.floor(Math.random() * 6);
-    initialTirage.gorgees = gorgeesList[rdmGorgeesNumber]
+    let rdmGorgeesNumber = Math.floor(Math.random() * 4);
+    tirage.gorgees = gorgeesList[rdmGorgeesNumber]
+  } else {
+    tirage.gorgees = 4
   }
 
   // Select tirage type
   if (timeUp) {
-    // console.log('TIRAGE times up fdp !');
-    initialTirage.type = 'time-up'
-    initialTirage.gorgees = 3
-    // setTimeUp(false)
+    tirage.type = 'time-up'
   } else {
     let rdmTirageNbr = Math.floor(Math.random() * 67);
-    if (rdmTirageNbr <= 29) initialTirage.type = 'classique'
-    else if (rdmTirageNbr >= 30 && rdmTirageNbr <= 44 && props.activePlayers.length <= 2) initialTirage.type = 'classique'
-    else if (rdmTirageNbr >= 30 && rdmTirageNbr <= 44 && props.activePlayers.length > 2) initialTirage.type = 'jeu-solo'
-    else if (rdmTirageNbr >= 45 && rdmTirageNbr <= 59) initialTirage.type = 'jeu-multi'
-    else if (rdmTirageNbr >= 60 && rdmTirageNbr <= 64) initialTirage.type = 'pot-add'
-    else if (props.pot === 0 && rdmTirageNbr === 65) initialTirage.type = 'pot-add'
-    else if (props.pot !== 0 && rdmTirageNbr === 65) initialTirage.type = 'pot-drink'
-    else if (rdmTirageNbr >= 66) initialTirage.type = 'pause'
+    if (rdmTirageNbr <= 29) tirage.type = 'classique'
+    else if (rdmTirageNbr >= 30 && rdmTirageNbr <= 44 && props.activePlayers.length <= 2) tirage.type = 'classique'
+    else if (rdmTirageNbr >= 30 && rdmTirageNbr <= 44 && props.activePlayers.length > 2) tirage.type = 'jeu-solo'
+    else if (rdmTirageNbr >= 45 && rdmTirageNbr <= 59) tirage.type = 'jeu-multi'
+    else if (rdmTirageNbr >= 60 && rdmTirageNbr <= 64) tirage.type = 'pot-add'
+    else if (props.pot === 0 && rdmTirageNbr === 65) tirage.type = 'pot-add'
+    else if (props.pot !== 0 && rdmTirageNbr === 65) {
+      tirage.type = 'pot-drink'
+      tirage.alcool = {name: 'pot', value: 0}
+    }
+    else if (rdmTirageNbr >= 66) tirage.type = 'pause'
     else console.log('error, no type set >> rdmTirageNbr + props.activePlayers', rdmTirageNbr, props.activePlayers.length)
   }
 
   // Select phrase from tirage type
   let phrasesType = []
   phrasesList.forEach(item => {
-    if (item.type === initialTirage.type) {
+    if (item.type === tirage.type) {
       phrasesType.push(item)
     }
   })
   let rdmPhraseNbr = Math.floor(Math.random() * phrasesType.length);
-  initialTirage.phrase = phrasesType[rdmPhraseNbr]
+  tirage.phrase = phrasesType[rdmPhraseNbr]
   
   // Define component based on tirage type
   let component
-  if (initialTirage.type === 'classique' || initialTirage.type === 'time-up' ) component = <Classique selectedPlayer={selectedPlayer} selectedPlayerIndex={selectedPlayerIndex} alcool={initialTirage.alcool} gorgees={initialTirage.gorgees} phrase={initialTirage.phrase} handleDrinkSolo={handleDrinkSolo} handleTimeUp={handleTimeUp} />
-  else if (initialTirage.type === 'jeu-solo') component = <Solo activePlayers={props.activePlayers} selectedPlayer={selectedPlayer} selectedPlayerIndex={selectedPlayerIndex} alcool={initialTirage.alcool} gorgees={initialTirage.gorgees} phrase={initialTirage.phrase} handleDrinkSolo={handleDrinkSolo} />
-  else if (initialTirage.type === 'jeu-multi') component = <Multi activePlayers={props.activePlayers} alcool={initialTirage.alcool} gorgees={initialTirage.gorgees} phrase={initialTirage.phrase} handleDrinkMulti={handleDrinkMulti} />
-  else if (initialTirage.type === 'pot-add') component = <AddPot selectedPlayer={selectedPlayer} alcool={initialTirage.alcool} gorgees={initialTirage.gorgees} phrase={initialTirage.phrase} pot={props.pot} setPot={props.setPot} handleDrinkMulti={handleDrinkMulti} />
-  else if (initialTirage.type === 'pot-drink') component = <DrinkPot selectedPlayer={selectedPlayer} selectedPlayerIndex={selectedPlayerIndex} phrase={initialTirage.phrase} pot={props.pot} setPot={props.setPot} handleDrinkSolo={handleDrinkSolo} handleTimeUp={handleTimeUp} />
-  else if (initialTirage.type === 'pause') component = <Pause phrase={initialTirage.phrase} phrase={initialTirage.phrase} handleSkip={handleSkip} handleTimeUp={handleTimeUp} />
+  if (tirage.type === 'classique' || tirage.type === 'time-up' ) component = <Classique selectedPlayer={selectedPlayer} selectedPlayerIndex={selectedPlayerIndex} alcool={tirage.alcool} gorgees={tirage.gorgees} phrase={tirage.phrase} handleDrinkSolo={handleDrinkSolo} handleTimeUp={handleTimeUp} />
+  else if (tirage.type === 'jeu-solo') component = <Solo activePlayers={props.activePlayers} selectedPlayer={selectedPlayer} selectedPlayerIndex={selectedPlayerIndex} alcool={tirage.alcool} gorgees={tirage.gorgees} phrase={tirage.phrase} handleDrinkSolo={handleDrinkSolo} />
+  else if (tirage.type === 'jeu-multi') component = <Multi activePlayers={props.activePlayers} alcool={tirage.alcool} gorgees={tirage.gorgees} phrase={tirage.phrase} handleDrinkMulti={handleDrinkMulti} />
+  else if (tirage.type === 'pot-add') component = <AddPot selectedPlayer={selectedPlayer} alcool={tirage.alcool} gorgees={tirage.gorgees} phrase={tirage.phrase} pot={props.pot} setPot={props.setPot} handleDrinkMulti={handleDrinkMulti} />
+  else if (tirage.type === 'pot-drink') component = <DrinkPot selectedPlayer={selectedPlayer} selectedPlayerIndex={selectedPlayerIndex} phrase={tirage.phrase} pot={props.pot} setPot={props.setPot} handleDrinkSolo={handleDrinkSolo} handleTimeUp={handleTimeUp} />
+  else if (tirage.type === 'pause') component = <Pause phrase={tirage.phrase} phrase={tirage.phrase} handleSkip={handleSkip} handleTimeUp={handleTimeUp} />
 
-  const [tirage, setTirage] = useState(initialTirage)
-  console.log("TIRAGE initialTirage", initialTirage);
+  // const [tirage, setTirage] = useState(tirage)
+  console.log("TIRAGE tirage", tirage);
 
   return (
     <View style={styles.container}>

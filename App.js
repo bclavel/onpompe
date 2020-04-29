@@ -48,6 +48,8 @@ export default function App() {
   const [alcools, setAlcools] = useState([...initAlcools]);
   let activeAlcools = alcools.filter(item => item.name)
 
+  const [tirages, setTirages] = useState([]);
+
   const [alcoolOption, setAlcoolOption] = useState(true);
   const [bonusOption, setBonusOption] = useState(true);
   const [potOption, setPotOption] = useState(false);
@@ -121,14 +123,20 @@ export default function App() {
     setRounds(value)
   }
   
-  const handleAddCurrentRound = () => {
-    setCurrentRound(currentRound + 1)
-  }
+  // const handleAddCurrentRound = () => {
+  // }
 
   const handleResetDrinkCount = () => {
     let playersTmp = [...players]
     playersTmp.map(item => item.drinks = 0)
     setPlayers(playersTmp)
+  }
+
+  const handleAddTirage = (drinkPlayers, gorgees, alcool, type, phrase) => {
+    let tiragesTmp = [...tirages]
+    tiragesTmp.push({currentRound, activePlayers, drinkPlayers, gorgees, alcool, type, phrase})
+    setTirages(tiragesTmp)
+    setCurrentRound(currentRound + 1)
   }
 
   return (
@@ -169,7 +177,7 @@ export default function App() {
           potOption={potOption}
           rounds={rounds}
           currentRound={currentRound}
-          addCurrentRound={handleAddCurrentRound}
+          addTirage={handleAddTirage}
           pot={pot}
           setPot={setPot}
         />}
@@ -182,6 +190,7 @@ export default function App() {
           rounds={rounds}
           setCurrentRound={setCurrentRound}
           resetDrintCount={handleResetDrinkCount}
+          tirages={tirages}
         />}
         </Stack.Screen>
       </Stack.Navigator>
