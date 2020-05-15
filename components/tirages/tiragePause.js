@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import Countdown from '../other/countdown'
+import TirageContext from '../../context/tirageContext';
 
-const TiragePause = (props) => {
+const TiragePause = props => {
   // console.log('PAUSE props', props);
+
+  const tirageContext = useContext(TirageContext)
+  const { phrase } = tirageContext
 
   return (
     <View style={styles.centralTirage}>
-        <Text style={styles.tirageText}>{props.phrase.text1}</Text>
+        <Text style={styles.tirageText}>{phrase.text1}</Text>
         <Countdown gorgees={3} handleTimeUp={props.handleTimeUp} />
         <Button title="Passer" titleStyle={styles.buttonBigTitle} onPress={() => props.handleSkip()} />
     </View>

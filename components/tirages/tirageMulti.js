@@ -1,47 +1,64 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import TirageContext from '../../context/tirageContext';
+import GameContext from '../../context/gameContext';
 
-const TirageMulti = (props) => {
+const TirageMulti = props => {
   // console.log('MULTI props', props);
 
-  const [players, setPlayers] = useState([...props.activePlayers])
+  const tirageContext = useContext(TirageContext)
+  const { gorgees, alcool, phrase } = tirageContext
+
+  const gameContext = useContext(GameContext)
+  const { activePlayers } = gameContext
+
+  let initialPlayers = [...activePlayers]
+
+  const [playerz, setPlayerz] = useState(initialPlayers)
   const [selectedPlayers, setSelectedPlayers] = useState([])
 
   const [errorMsg, setErrorMsg] = useState(null);
 
+  // On component render, resets all players selected property
   useEffect(() => {
-    let playersTmp = [...players]
+    let playersTmp = [...playerz]
      playersTmp.forEach(item => item.selected = false)
-    setPlayers(playersTmp)
+     setPlayerz(playersTmp)
   }, [])
 
+  // When a player is selected, updates the selected players list
   useEffect(() => {
-    let playersTmp = players.filter(item => item.selected === true)
+    let playersTmp = playerz.filter(item => item.selected === true)
     setSelectedPlayers(playersTmp)
-  }, [players])
+  }, [playerz])
 
+  // On click of player button, updates the selected property in players list
   const handleSelectPlayer = (index, selected) => {
-    let playersTmp = [...players]
+    let playersTmp = [...playerz]
     playersTmp[index].selected = !selected
-    setPlayers(playersTmp)
+    setPlayerz(playersTmp)
   }
 
+  // On submit, sends to Tirage the list of selected players to drink
   const handleSubmit = () => {
     if (selectedPlayers.length < 1) {
       setErrorMsg('Veuillez sélectionner au moins un joueur')
     } else {
       setSelectedPlayers([])
-      props.handleDrinkMulti(selectedPlayers, props.gorgees)
+      // delete selectedPlayers.selected
+      props.handleDrinkMulti(selectedPlayers)
     }
   }
 
+  // console.log('MULTI players', players);
+
   return (
     <View style={styles.centralTirage}>
-      <Text style={styles.tirageText}>{props.phrase.text1} {props.gorgees} {props.gorgees > 1 ? "gorgées" : 'gorgée'} {props.alcool ? "de " + props.alcool.name : "de son verre"}</Text>
+      <Text style={styles.tirageText}>{phrase.text1} {gorgees} {gorgees > 1 ? "gorgées" : 'gorgée'} {alcool ? "de " + alcool.name : "de son verre"}</Text>
       <View style={styles.multiTirage}>
-          {players.map((item, i) => <Button icon={item.selected ? <Icon name="check" size={15} color="white" /> : null}containerStyle={styles.smallButton} titleStyle={styles.buttonSmallTitle} buttonStyle={{backgroundColor: 'green'}} key={i} title={item.name} type="outline" onPress={() => handleSelectPlayer(i, item.selected)} />)}
+          {playerz.map((item, i) => <Button icon={item.selected ? <Icon name="check" size={15} color="white" /> : null} containerStyle={styles.smallButton} titleStyle={styles.buttonSmallTitle} buttonStyle={{backgroundColor: 'green'}} key={i} title={item.name} type="outline" onPress={() => handleSelectPlayer(i, item.selected)} />)}
       </View>
       <Text style={{display: errorMsg ? 'flex' : 'none', color: 'red', marginTop: 10}}>{errorMsg}</Text>
       <Button title="Valider" containerStyle={styles.bigButton} titleStyle={styles.buttonBigTitle} onPress={() => handleSubmit()} />

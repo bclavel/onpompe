@@ -38,7 +38,9 @@
       "id": 8,
       "type": "jeu-solo",
       "text1": "tu peux choisir une personne qui va boire",
-      "text2": ""
+      "text2": "",
+      "followUp1": "tu sais que la vengeance se mange froid, mais tu bois quand même",
+      "followUp2": ""
     },{
       "id": 9,
       "type": "classique",
@@ -58,22 +60,30 @@
       "id": 12,
       "type": "jeu-multi",
       "text1": "Ceux qui ne portent pas de chaussures peuvent distributer",
-      "text2": ""
+      "text2": "",
+      "followUp1": "cheh!",
+      "followUp2": ""
     },{
       "id": 13,
       "type": "jeu-multi",
       "text1": "Pour ou contre les toilettes mixtes ? Votez tous en même temps et la minorité boit",
-      "text2": ""
+      "text2": "",
+      "followUp1": "cheh!",
+      "followUp2": ""
     },{
       "id": 14,
       "type": "jeu-multi",
       "text1": "Ceux qui ont déjà couché avec plus de 20 partenaires boivent",
-      "text2": ""
+      "text2": "",
+      "followUp1": "cheh!",
+      "followUp2": ""
     },{
       "id": 15,
       "type": "jeu-multi",
       "text1": "Ceux qui ont déjà couché avec moins de 20 partenaires boivent",
-      "text2": ""
+      "text2": "",
+      "followUp1": "cheh!",
+      "followUp2": ""
     },{
       "id": 16,
       "type": "jeu-solo-bool",
@@ -83,22 +93,30 @@
       "id": 17,
       "type": "jeu-multi",
       "text1": "Le premier qui enlève un vêtement désigne qui doit boire",
-      "text2": ""
+      "text2": "",
+      "followUp1": "cheh!",
+      "followUp2": ""
     },{
       "id": 18,
       "type": "jeu-multi",
       "text1": "Gagner 1 million ou vivre en bonne santé jusqu'à 100 ans ? Votez tous en même temps et la minorité boit",
-      "text2": ""
+      "text2": "",
+      "followUp1": "cheh!",
+      "followUp2": ""
     },{
       "id": 19,
       "type": "jeu-multi",
       "text1": "Le premier qui cite le dernier film de Brad Pitt peut distribuer",
-      "text2": ""
+      "text2": "",
+      "followUp1": "cheh!",
+      "followUp2": ""
     },{
       "id": 20,
       "type": "jeu-multi",
       "text1": "Votez pour celui avec les plus belles fesses, il boit",
-      "text2": ""
+      "text2": "",
+      "followUp1": "cheh!",
+      "followUp2": ""
     },{
       "id": 21,
       "type": "pause",

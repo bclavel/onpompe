@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
+import PotContext from '../../context/potContext';
+import TirageContext from '../../context/tirageContext';
 
-const TirageAddPot = (props) => {
+const TirageAddPot = props => {
   // console.log('ADDPOT props', props);
 
+  const tirageContext = useContext(TirageContext)
+  const { selectedPlayer, phrase, alcool, gorgees } = tirageContext
+
+  const potContext = useContext(PotContext)
+  const { pot, setPot } = potContext
+
   const addPot = () => {
-      let newPot = props.pot
-      newPot += props.gorgees
-      props.setPot(newPot)
+      let newPot = pot
+      newPot += gorgees
+      setPot(newPot)
   }
 
   return (
     <View style={styles.centralTirage}>
-      <Text style={styles.tirageText}>{props.selectedPlayer.name} {props.phrase.text1} {props.gorgees} {props.gorgees > 1 ? "gorgées" : 'gorgée'} {props.alcool ? "de " + props.alcool.name : "de ton verre"} {props.phrase.text2}</Text>
+      <Text style={styles.tirageText}>{selectedPlayer.name} {phrase.text1} {gorgees} {gorgees > 1 ? "gorgées" : 'gorgée'} {alcool ? "de " + alcool.name : "de ton verre"} {phrase.text2}</Text>
       <Button title="C'est fait !" containerStyle={styles.bigButton} titleStyle={styles.buttonBigTitle} onPress={() => addPot()} />
     </View>
   );

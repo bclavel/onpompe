@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
+import TirageContext from '../../context/tirageContext'
+import GameContext from '../../context/gameContext'
 
-const TirageSolo = (props) => {
+
+const TirageSolo = props => {
   // console.log('SOLO props', props);
 
-  let possiblePlayers = props.activePlayers.filter(item => item.id !== props.selectedPlayer.id)
+  const tirageContext = useContext(TirageContext)
+  const { selectedPlayer, gorgees, alcool, phrase } = tirageContext
+
+  const gameContext = useContext(GameContext)
+  const { activePlayers } = gameContext
+
+  let possiblePlayers = activePlayers.filter(item => item.id !== selectedPlayer.id)
 
   const drinkSolo = (player) => {
-    props.activePlayers.forEach((item, i) => {
+    activePlayers.forEach((item, i) => {
       if (player.id === item.id) props.handleDrinkSolo(player)
     })
   }
 
   return (
     <View style={styles.centralTirage}>
-      <Text style={styles.tirageText}>{props.selectedPlayer.name} {props.phrase.text1} {props.gorgees} {props.gorgees > 1 ? "gorgées" : 'gorgée'} {props.alcool ? "de " + props.alcool.name : "de ton verre"}</Text>
+      <Text style={styles.tirageText}>{selectedPlayer.name} {phrase.text1} {gorgees} {gorgees > 1 ? "gorgées" : 'gorgée'} {alcool ? "de " + alcool.name : "de ton verre"}</Text>
       <View style={styles.multiTirage}>
           {possiblePlayers.map(item => <Button containerStyle={styles.button} titleStyle={styles.buttonSmallTitle} buttonStyle={{backgroundColor: 'green'}} key={item.id} title={item.name} type="outline" onPress={() => drinkSolo(item)} />)}
       </View>

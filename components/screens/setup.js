@@ -1,20 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, ScrollView, View, Text, Switch, Slider, Picker } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import GameContext from '../../context/gameContext'
 
 const SetupScreen = (props) => {
   // console.log('SETUP props', props);
   // todo : popin warning conso alcool
 
+  const gameContext = useContext(GameContext)
+  const { 
+    game, 
+    activePlayers, 
+    alcoolOption, 
+    activeAlcools, 
+    bonusOption, 
+    potOption, 
+    rounds, 
+    changePlayerName, 
+    removePlayer, 
+    addPlayer, 
+    alcoolSelect, 
+    changeAlcoolName, 
+    removeAlcool, 
+    addAlcool, 
+    bonusSelect, 
+    bonusSlide, 
+    roundPick,
+    potSelect 
+  } = gameContext
+
   const [errorMsg, setErrorMsg] = useState(null);
 
   const launchGame = () => {
-    if (props.activePlayers.length >= 2 && (props.activeAlcools.length >= 1 || !props.alcoolOption)) {
+    if (activePlayers.length >= 2 && (activeAlcools.length >= 1 || !alcoolOption)) {
       props.navigation.navigate('Tirage')
-    } else if (props.activePlayers.length < 2 && (props.activeAlcools.length >= 1 || !props.alcoolOption)) {
+    } else if (activePlayers.length < 2 && (activeAlcools.length >= 1 || !alcoolOption)) {
       setErrorMsg("Veuillez définir au moins 2 jouers")
-    } else if (props.activePlayers.length >= 2 && props.activeAlcools.length < 1) {
+    } else if (activePlayers.length >= 2 && activeAlcools.length < 1) {
       setErrorMsg("Veuillez définir au moins 1 alcool")
     } else {
       setErrorMsg("Veuillez définir au moins 2 joueurs et 1 alcool")
@@ -22,47 +45,47 @@ const SetupScreen = (props) => {
   }
 
   useEffect(() => {
-    if (props.activePlayers.length >= 2 && props.activeAlcools.length >= 1) setErrorMsg(null)
-  }, [props.activePlayers, props.activeAlcools])
+    if (activePlayers.length >= 2 && activeAlcools.length >= 1) setErrorMsg(null)
+  }, [activePlayers, activeAlcools])
   
   return (
     <ScrollView contentContainerStyle={styles.scrollview} centerContent='true'>
       <Text style={styles.pageTitle}>On pompe !</Text>
       <View style={styles.option}>
         <Text style={styles.sectionTitle}>Joueurs</Text>
-        {props.players.map((item,i)  => (
+        {game.players.map((item,i)  => (
           <View key={i} style={styles.input}>
-            <Input placeholder='Nom du joueur' value={item.name} containerStyle={{width: '93%'}} onChangeText={text => props.changePlayerName(text, i)} />
-            <Icon name="remove" size={15} style={{padding: 7}} color="grey" onPress={() => props.removePlayer(i)} />
+            <Input placeholder='Nom du joueur' value={item.name} containerStyle={{width: '93%'}} onChangeText={text => changePlayerName(text, i)} />
+            <Icon name="remove" size={15} style={{padding: 7}} color="grey" onPress={() => removePlayer(i)} />
           </View>
         ))}
-        <Button icon={<Icon name="plus" size={15} color="grey" />} titleStyle={styles.addLink} type='clear' title="Ajouter un joueur" onPress={props.addPlayer} />
+        <Button icon={<Icon name="plus" size={15} color="grey" />} titleStyle={styles.addLink} type='clear' title="Ajouter un joueur" onPress={addPlayer} />
       </View>
       <View style={styles.option}>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Choix des alcools</Text>
-          <Switch value={props.alcoolOption} onChange={() => props.alcoolSelect()}/>
+          <Switch value={alcoolOption} onChange={() => alcoolSelect()}/>
         </View>
-        <View style={{display: props.alcoolOption ? 'flex' : 'none', width: '100%', alignItems: 'flex-start'}}>
-          {props.alcools.map((item,i)  => (
+        <View style={{display: alcoolOption ? 'flex' : 'none', width: '100%', alignItems: 'flex-start'}}>
+          {game.alcools.map((item,i)  => (
             <View key={i} style={styles.input}>
-              <Input placeholder="Alcool" value={item.name} containerStyle={{width: '93%'}} onChangeText={text => props.changeAlcoolName(text, i)} />
-              <Icon name="remove" size={15} style={{padding: 7}} color="grey" onPress={() => props.removeAlcool(i)} />
+              <Input placeholder="Alcool" value={item.name} containerStyle={{width: '93%'}} onChangeText={text => changeAlcoolName(text, i)} />
+              <Icon name="remove" size={15} style={{padding: 7}} color="grey" onPress={() => removeAlcool(i)} />
             </View>
           ))}
-          <Button icon={<Icon name="plus" size={15} color="grey" />} titleStyle={styles.addLink} type='clear' title="Ajouter un alcool" onPress={props.addAlcool} />
+          <Button icon={<Icon name="plus" size={15} color="grey" />} titleStyle={styles.addLink} type='clear' title="Ajouter un alcool" onPress={addAlcool} />
         </View>
       </View>
       <View style={styles.option}>
         <View style={styles.section}>
             <Text style={styles.sectionTitle}>Bonus/Malus aux joueurs</Text>
-            <Switch value={props.bonusOption} onChange={() => props.bonusSelect()}/>
+            <Switch value={bonusOption} onChange={() => bonusSelect()}/>
         </View>
-        <View style={{display: props.bonusOption ? 'flex' : 'none', width: '100%', alignItems: 'flex-start', marginTop: 8}}>
-          {props.players.map((item,i) => (
+        <View style={{display: bonusOption ? 'flex' : 'none', width: '100%', alignItems: 'flex-start', marginTop: 8}}>
+          {game.players.map((item,i) => (
             <React.Fragment key={i}>
               <Text style={styles.bonusText}>{item.name || "Nom du joueur"} : {item.bonus * 100}%</Text>
-              {props.bonusOption && <Slider style={{width: '100%'}} minimumValue={0.5} maximumValue={2} step={0.5} value={item.bonus} onValueChange={value => props.bonusSlide(value, i)} /> }
+              {bonusOption && <Slider style={{width: '100%'}} minimumValue={0.5} maximumValue={2} step={0.5} value={item.bonus} onValueChange={value => bonusSlide(value, i)} /> }
             </React.Fragment>
           ))}
         </View>
@@ -70,7 +93,7 @@ const SetupScreen = (props) => {
       <View style={styles.roundOption}>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Durée de la partie</Text>
-          <Picker selectedValue={props.rounds} style={styles.picker} onValueChange={itemValue => props.roundPick(itemValue)}>
+          <Picker selectedValue={rounds} style={styles.picker} onValueChange={itemValue => roundPick(itemValue)}>
             <Picker.Item label="50 tirages" value={50} />
             <Picker.Item label="100 tirages" value={100} />
             <Picker.Item label="200 tirages" value={200} />
@@ -81,7 +104,7 @@ const SetupScreen = (props) => {
       <View style={styles.potOption}>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Jouer avec le pot</Text>
-          <Switch value={props.potOption} onChange={props.potSelect}/>
+          <Switch value={potOption} onChange={potSelect}/>
         </View>
       </View>
       <Text style={{display: errorMsg ? 'flex' : 'none', color: 'red', marginTop: 10}}>{errorMsg}</Text>
