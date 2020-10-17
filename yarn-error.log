@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\xelou\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @react-native-community/slider
+  C:\Program Files\nodejs\node.exe C:\Users\xelou\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-native@0.63.3 react@16.13.1
 
 PATH: 
-  C:\Program Files\Dell\DW WLAN Card;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\WIDCOMM\Bluetooth Software\;C:\Program Files\WIDCOMM\Bluetooth Software\syswow64;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\OpenVPN\bin;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\nodejs\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\HMA! Pro VPN\bin;C:\Users\xelou\AppData\Local\Microsoft\WindowsApps;C:\Users\xelou\AppData\Roaming\npm;C:\Users\xelou\AppData\Local\atom\bin;"C:\Python27;C:\Python27\Lib\site-packages\;C:\Python27\Scripts\;";C:\Program Files\heroku\bin;C:\Users\xelou\AppData\Local\Microsoft\WindowsApps;;C:\Users\xelou\AppData\Local\Programs\Microsoft VS Code\bin
+  C:\Users\xelou\Documents\WORK\WORK-Freelance\On pompe\onpompe\node_modules\.bin;C:\Users\xelou\Documents\WORK\WORK-Freelance\On pompe\node_modules\.bin;C:\Users\xelou\Documents\WORK\WORK-Freelance\node_modules\.bin;C:\Users\xelou\Documents\WORK\node_modules\.bin;C:\Users\xelou\Documents\node_modules\.bin;C:\Users\xelou\node_modules\.bin;C:\Users\node_modules\.bin;C:\node_modules\.bin;C:\Program Files\nodejs;C:\Users\xelou\Documents\WORK\WORK-Freelance\On pompe\onpompe\node_modules\.bin;C:\Program Files\Dell\DW WLAN Card;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\WIDCOMM\Bluetooth Software\;C:\Program Files\WIDCOMM\Bluetooth Software\syswow64;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\OpenVPN\bin;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\nodejs\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Android;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\HMA! Pro VPN\bin;C:\Users\xelou\AppData\Local\Microsoft\WindowsApps;C:\Users\xelou\AppData\Roaming\npm;C:\Users\xelou\AppData\Local\atom\bin;"C:\Python27;C:\Python27\Lib\site-packages\;C:\Python27\Scripts\;";C:\Program Files\heroku\bin;C:\Users\xelou\AppData\Local\Microsoft\WindowsApps;C:\Users\xelou\AppData\Local\Programs\Microsoft VS Code\bin
 
 Yarn version: 
   1.16.0
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\xelou\Documents\WORK\WORK-Freelance\On pompe\onpompe\node_modules\@babel\generator\node_modules\.bin'
+  Error: EPERM: operation not permitted, unlink 'C:\Users\xelou\Documents\WORK\WORK-Freelance\On pompe\onpompe\node_modules\.staging\read-chunk-9040e0e1'
 
 npm manifest: 
   {
@@ -31,6 +31,7 @@ npm manifest:
       "@fortawesome/free-solid-svg-icons": "^5.12.1",
       "@fortawesome/react-native-fontawesome": "^0.2.2",
       "@react-native-community/masked-view": "0.1.5",
+      "@react-native-community/slider": "^2.0.8",
       "@react-navigation/native": "^5.0.7",
       "@react-navigation/stack": "^5.0.9",
       "expo": "~36.0.0",

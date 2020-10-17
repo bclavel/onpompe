@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import GameContext from './gameContext';
 
 const GameState = props => {
@@ -36,6 +36,8 @@ const GameState = props => {
     const [game, setGame] = useState(initialState)
     // console.log('GAMESTATE game', game)
 
+  
+    const [gameTirages, setGameTirages] = useState([])
     const [activePlayers, setActivePlayers] = useState([])
     const [activeAlcools, setActiveAlcools] = useState([])
     const [alcoolOption, setAlcoolOption] = useState(true);
@@ -119,6 +121,11 @@ const GameState = props => {
       setRounds(value)
     }
 
+    const setNewGame = () => {
+      setGame(initialState)
+      setGameTirages([])
+    }
+
     return (
         <GameContext.Provider 
             value={{
@@ -129,7 +136,9 @@ const GameState = props => {
                 bonusOption,
                 potOption,
                 rounds,
+                gameTirages,
                 setGame,
+                setGameTirages,
                 addPlayer,
                 changePlayerName,
                 removePlayer,
@@ -141,6 +150,7 @@ const GameState = props => {
                 bonusSlide,
                 potSelect,
                 roundPick,
+                setNewGame
             }}>
             {props.children}
         </GameContext.Provider>

@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {StyleSheet, Image, View, Text} from 'react-native';
 import { Button } from 'react-native-elements';
+import GameContext from '../../context/gameContext'
 
 const FinishScreen = (props) => {
   // console.log('FINISH props', props);
+
+  const gameContext = useContext(GameContext)
+  const { activePlayers, setNewGame } = gameContext
 
   // todo : ajouter des stats sur les rounds, le total d'alcools bus
   // todo : mettre un mot pour celui qui a bu le pot
 
   const handleFinishGame = () => {
-    props.setCurrentRound(1)
-    props.resetDrintCount()
+    setNewGame()
     props.navigation.navigate('Setup')
   }
 
-  let finalPlayers = props.activePlayers.sort((a,b) => a.drinks < b.drinks)
+  const finalPlayers = activePlayers.sort((a,b) => a.drinks < b.drinks)
 
   return (
     <View style={styles.container}>

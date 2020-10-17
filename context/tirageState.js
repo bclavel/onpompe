@@ -1,23 +1,25 @@
 import React, { useState, useContext } from "react";
-import TirageContext from './tirageContext';
 import phrasesList from '../assets/phrases.json';
+import TirageContext from './tirageContext';
 import PotContext from './potContext'
+import GameContext from './gameContext'
 
 const TirageState = props => {
 
     const potContext = useContext(PotContext)
     const { pot } = potContext
 
-    const tirages = []
+    const gameContext = useContext(GameContext)
+    const { setGameTirages, gameTirages } = gameContext
+
     const activePlayers = []
     const drinkPlayers = []
 
     // const [currentRound, setCurrentRound] = useState(1); // switch into tirageContext
 
     const initialState = {
-        tirages: tirages,
         tirage: {
-            round: 1,
+            round: 0,
             activePlayers: activePlayers,
             drinkPlayers: drinkPlayers,
             selectedPlayer: null,
@@ -31,12 +33,29 @@ const TirageState = props => {
         followUp: false
     }
 
+    // function Tiragez(activePlayers, drinkPlayers) {
+    //     this.round = 0;
+    //     this.activePlayers = activePlayers;
+    //     this.drinkPlayers = drinkPlayers;
+    //     this.selectedPlayer = null;
+    //     this.selectedPlayerIndex = null;
+    //     this.gorgees = null;
+    //     this.alcool = null;
+    //     this.type = null;
+    //     this.phrase = null;
+    // }
+
+
     const [state, setState] = useState(initialState)
 
-    console.log('TIRAGE STATE tirages', state.tirages);
+    // console.log('TIRAGE STATE global state', state);
 
     const setTirage = (activePlayers, alcoolOption, activeAlcools, potOption) => {
         let stateTmp = {...state}
+
+        // let newTirage = new Tiragez(activePlayers)
+
+        // console.log('TIRAGE STATE setTirage stateTmp begin', stateTmp);
 
         activePlayers.forEach(item => delete item.selected)
         stateTmp.tirage.activePlayers = activePlayers
@@ -92,36 +111,39 @@ const TirageState = props => {
         let rdmPhraseNbr = Math.floor(Math.random() * phrasesType.length);
         stateTmp.tirage.phrase = phrasesType[rdmPhraseNbr]
 
-        console.log('TIRAGE STATE stateTmp', stateTmp);
-        
+        // console.log('TIRAGE STATE setTirage stateTmp end', stateTmp);
+
         setState(stateTmp)
     }
 
-    const addTirage = (drinkPlayers) => {
-        console.log('TirageState >> addTirage');
+    const addTirage = (drinkPlayers) => { // passer le tirage en attribut ?
+        // console.log('TirageState >> addTirage');
 
         let stateTmp = {...state}
+        // console.log('TIRAGE STATE addTirage stateTmp begin', stateTmp);
+
         stateTmp.tirage.round += 1
         stateTmp.tirage.drinkPlayers = drinkPlayers
-
-        stateTmp.tirages.push(stateTmp.tirage)
-
+        // console.log('TIRAGE STATE addTirage stateTmp end', stateTmp);
+        
         setState(stateTmp)
+
+        gameTiragesTmp = [...gameTirages]
+        gameTiragesTmp.push(stateTmp.tirage)
+        setGameTirages(gameTiragesTmp)
     }
 
     const setTimeUp = () => {
-        console.log('TirageState >> setTimeUp');
+        // console.log('TirageState >> setTimeUp');
         let stateTmp = {...state}
         stateTmp.tirage.gorgees = 4
         stateTmp.tirage.type = 'time-up'
         setState(stateTmp)
     }
 
-
     return (
         <TirageContext.Provider 
             value={{
-                tirages: state.tirages,
                 tirage: state.tirage,
                 timeUp: state.timeUp,
                 round: state.tirage.round,

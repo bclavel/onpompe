@@ -22,9 +22,10 @@ const TirageScreen = (props) => {
   // todo / ! \ : après un tirage solo & multi, il faut un tirage pour permettre aux joueurs de boire !!!
   // todo : gérer la condition potOption dans le tirage
   // todo : fixer la pause avec le nouveau système
+  // todo : fixer le problème de modification de tous les anciens tirages lorsqu'on fait setTirages... Passer par une fonction/class >> new Tirage ???
 
   const tirageContext = useContext(TirageContext)
-  const { tirage, setTirage, addTirage, tirages, type, round } = tirageContext
+  const { tirage, setTirage, addTirage, type, round } = tirageContext
 
   // console.log('TIRAGE tirage type', type);
 
